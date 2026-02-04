@@ -51,7 +51,6 @@ button{
 
 button:hover{transform:scale(1.1)}
 
-/* Floating hearts */
 .heart{
  position:absolute;
  width:18px;
@@ -78,7 +77,6 @@ button:hover{transform:scale(1.1)}
  100%{bottom:110%;opacity:0}
 }
 
-/* Heart explosion */
 .explosion-heart{
  position:absolute;
  font-size:26px;
@@ -90,7 +88,6 @@ button:hover{transform:scale(1.1)}
  100%{transform:translate(var(--x),var(--y)) scale(1);opacity:0}
 }
 
-/* Kiss rain */
 .kiss{
  position:absolute;
  font-size:28px;
@@ -101,14 +98,45 @@ button:hover{transform:scale(1.1)}
  0%{top:-10%;opacity:1}
  100%{top:110%;opacity:0}
 }
+
+.ring{
+ position:fixed;
+ top:50%;
+ left:50%;
+ transform:translate(-50%,-50%) scale(0);
+ font-size:90px;
+ animation:ringPop 2s ease forwards;
+ z-index:999;
+}
+
+@keyframes ringPop{
+ 0%{transform:translate(-50%,-50%) scale(0);}
+ 60%{transform:translate(-50%,-50%) scale(1.4);}
+ 100%{transform:translate(-50%,-50%) scale(1);}
+}
+
+.sparkle{
+ position:fixed;
+ font-size:20px;
+ animation:sparkle 1.5s ease-out forwards;
+}
+
+@keyframes sparkle{
+ from{opacity:1;transform:translate(0,0);}
+ to{opacity:0;transform:translate(var(--x),var(--y));}
+}
 </style>
 </head>
 
 <body>
 
-<audio autoplay loop>
+<audio id="bgMusic" loop>
 <source src="https://files.catbox.moe/4h4p6t.mp3" type="audio/mpeg">
 </audio>
+
+<button onclick="playMusic()" style="position:fixed;bottom:10px;right:10px;
+background:#ff4d88;color:white;border:none;padding:8px 15px;
+border-radius:20px;cursor:pointer;">🎵 Play Music</button>
 
 <div class="container" id="box">
  <h1>Krishna Gohil 💖</h1>
@@ -121,6 +149,10 @@ button:hover{transform:scale(1.1)}
 </div>
 
 <script>
+
+function playMusic(){
+ document.getElementById("bgMusic").play();
+}
 
 const noTexts=[
  "No you cannot do that 😤💔",
@@ -166,19 +198,27 @@ yesBtn.onclick=()=>{
  box.innerHTML=`<h1>💖 I KNEW IT, MY QUEEN! 👑💖</h1>
  <p id="loveText"></p>`;
  heartExplosion();
+ showRing();
  startKissRain();
  typeLoveMessage();
 };
 
-const loveMessage=`You are my queen and I will treat you like one forever 👑💞 
-I promise to love you, respect you, protect you and always stand by your side 💕 
+const loveMessage=`<b>KRISHNA GOHIL</b> ❤️
 
-No matter how far you try to go from me, 
-I will come back to your door again and again 🚪❤️ 
-because I am never giving up on you — not today, not tomorrow, not ever 🥹💖 
+You are my queen and I will treat you like one forever 👑💞  
+I promise to love you, respect you, protect you and always stand by your side 💕
 
-You are my happiness, my peace, my smile, my everything 🌸✨ 
-Thank you so much for accepting and being my Valentine 💕🌹 
+I am truly sorry for every mistake and all the fuck ups I did in the past 😔💔  
+I promise you with my whole heart that it will never be repeated again in the future ❤️‍🩹  
+
+I will make sure I give you all the loyalty, all the honesty, and all the love in the world 💖  
+I will never hurt you again and will always choose you every single day 🌸✨  
+
+No matter how far you try to go from me,  
+I will come back to your door again and again 🚪❤️  
+because I am never giving up on you — not today, not tomorrow, not ever 🥹💖  
+
+You are my happiness, my peace, my smile, my everything 💕🌹  
 
 Forever Yours ❤️`;
 
@@ -189,7 +229,7 @@ function typeLoveMessage(){
   text.innerHTML+=loveMessage[i];
   i++;
   if(i>=loveMessage.length) clearInterval(interval);
- },40);
+ },35);
 }
 
 function heartExplosion(){
@@ -204,6 +244,27 @@ function heartExplosion(){
   document.body.appendChild(heart);
   setTimeout(()=>heart.remove(),1500);
  }
+}
+
+function showRing(){
+ const ring=document.createElement("div");
+ ring.className="ring";
+ ring.innerHTML="💍";
+ document.body.appendChild(ring);
+
+ for(let i=0;i<20;i++){
+  const spark=document.createElement("div");
+  spark.className="sparkle";
+  spark.innerHTML="✨";
+  spark.style.left="50%";
+  spark.style.top="50%";
+  spark.style.setProperty("--x",(Math.random()-0.5)*200+"px");
+  spark.style.setProperty("--y",(Math.random()-0.5)*200+"px");
+  document.body.appendChild(spark);
+  setTimeout(()=>spark.remove(),1500);
+ }
+
+ setTimeout(()=>ring.remove(),3000);
 }
 
 function createHeart(){
