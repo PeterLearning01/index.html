@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Krishna ❤️ Valentine</title>
+
+<style>
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:linear-gradient(135deg,#ffd6e8,#ffeaf4);
+ overflow:hidden;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ height:100vh;
+}
+
+.container{
+ background:rgba(255,255,255,0.85);
+ padding:25px;
+ border-radius:20px;
+ text-align:center;
+ width:90%;
+ max-width:420px;
+ box-shadow:0 0px 25px rgba(255,105,180,0.4);
+ animation:pop 1s ease;
+ position:relative;
+}
+
+@keyframes pop{0%{transform:scale(.5)}100%{transform:scale(1)}}
+
+h1{color:#ff4d88;font-size:2rem;}
+p{color:#ff3366;font-size:1.05rem;}
+
+.buttons{margin-top:20px;position:relative;}
+
+button{
+ padding:12px 25px;
+ border:none;
+ border-radius:30px;
+ font-size:1.1rem;
+ cursor:pointer;
+ margin:8px;
+ transition:.3s;
+ position:relative;
+}
+
+#yesBtn{background:#ff4d88;color:white}
+#noBtn{background:#ffc2d1;color:#ff3366}
+
+button:hover{transform:scale(1.1)}
+
+/* Floating hearts */
+.heart{
+ position:absolute;
+ width:18px;
+ height:18px;
+ background:pink;
+ transform:rotate(45deg);
+ animation:float 6s linear infinite;
+}
+
+.heart::before,.heart::after{
+ content:'';
+ position:absolute;
+ width:18px;
+ height:18px;
+ background:pink;
+ border-radius:50%;
+}
+.heart::before{top:-9px;left:0}
+.heart::after{left:-9px;top:0}
+
+@keyframes float{
+ 0%{bottom:-10%;opacity:0}
+ 50%{opacity:.8}
+ 100%{bottom:110%;opacity:0}
+}
+
+/* Heart explosion */
+.explosion-heart{
+ position:absolute;
+ font-size:26px;
+ animation:explode 1.5s ease-out forwards;
+}
+
+@keyframes explode{
+ 0%{transform:scale(0)}
+ 100%{transform:translate(var(--x),var(--y)) scale(1);opacity:0}
+}
+
+/* Kiss rain */
+.kiss{
+ position:absolute;
+ font-size:28px;
+ animation:kissFall 4s linear forwards;
+}
+
+@keyframes kissFall{
+ 0%{top:-10%;opacity:1}
+ 100%{top:110%;opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+<source src="https://files.catbox.moe/4h4p6t.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container" id="box">
+ <h1>Krishna Gohil 💖</h1>
+ <p id="msg">Will you be my Valentine? 🌸</p>
+
+ <div class="buttons">
+  <button id="yesBtn">YES 💕</button>
+  <button id="noBtn">NO 😢</button>
+ </div>
+</div>
+
+<script>
+
+const noTexts=[
+ "No you cannot do that 😤💔",
+ "I told you 😒🙄",
+ "You are not letting it go 😑😩",
+ "Just tap on YES come on 🥺👉💖",
+ "You are getting me angry 😠💢",
+ "Are you really pressing NO again? 😳💔",
+ "This button is broken 😭😂",
+ "Come on Krishna pleaseee 🥹💞",
+ "My heart can’t take this 💔😢",
+ "You know you want to say YES 😏💖",
+ "Stop playing hard to get 😜💕",
+ "I’m watching you 👀💗",
+ "This NO is hurting me 😭💔",
+ "Say YES already princess 👑💖",
+ "Last chance 😤👉 YES NOW 💕",
+ "Why you doing this to me 😩💔",
+ "Okay I’m gonna cry now 😭😭💞",
+ "Don’t be so cruel 😢💗",
+ "YES is the only correct answer 😌💖",
+ "No button tired now 😵💔"
+];
+
+let noIndex=0;
+const noBtn=document.getElementById("noBtn");
+const yesBtn=document.getElementById("yesBtn");
+const box=document.getElementById("box");
+
+noBtn.onclick=()=>{
+ noBtn.innerText=noTexts[noIndex%noTexts.length];
+ noIndex++;
+
+ // move NO button randomly
+ const x=Math.random()*(window.innerWidth-120);
+ const y=Math.random()*(window.innerHeight-60);
+
+ noBtn.style.position="fixed";
+ noBtn.style.left=x+"px";
+ noBtn.style.top=y+"px";
+};
+
+yesBtn.onclick=()=>{
+ box.innerHTML=`<h1>💖 I KNEW IT, MY QUEEN! 👑💖</h1>
+ <p id="loveText"></p>`;
+ heartExplosion();
+ startKissRain();
+ typeLoveMessage();
+};
+
+const loveMessage=`You are my queen and I will treat you like one forever 👑💞 
+I promise to love you, respect you, protect you and always stand by your side 💕 
+
+No matter how far you try to go from me, 
+I will come back to your door again and again 🚪❤️ 
+because I am never giving up on you — not today, not tomorrow, not ever 🥹💖 
+
+You are my happiness, my peace, my smile, my everything 🌸✨ 
+Thank you so much for accepting and being my Valentine 💕🌹 
+
+Forever Yours ❤️`;
+
+function typeLoveMessage(){
+ let i=0;
+ const text=document.getElementById("loveText");
+ const interval=setInterval(()=>{
+  text.innerHTML+=loveMessage[i];
+  i++;
+  if(i>=loveMessage.length) clearInterval(interval);
+ },40);
+}
+
+function heartExplosion(){
+ for(let i=0;i<40;i++){
+  const heart=document.createElement("div");
+  heart.className="explosion-heart";
+  heart.innerHTML="💖";
+  heart.style.left="50%";
+  heart.style.top="50%";
+  heart.style.setProperty("--x",(Math.random()-0.5)*400+"px");
+  heart.style.setProperty("--y",(Math.random()-0.5)*400+"px");
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),1500);
+ }
+}
+
+function createHeart(){
+ const heart=document.createElement("div");
+ heart.className="heart";
+ heart.style.left=Math.random()*100+"vw";
+ heart.style.animationDuration=(3+Math.random()*4)+"s";
+ document.body.appendChild(heart);
+ setTimeout(()=>heart.remove(),6000);
+}
+setInterval(createHeart,300);
+
+function startKissRain(){
+ setInterval(()=>{
+  const kiss=document.createElement("div");
+  kiss.className="kiss";
+  kiss.innerHTML="💋";
+  kiss.style.left=Math.random()*100+"vw";
+  document.body.appendChild(kiss);
+  setTimeout(()=>kiss.remove(),4000);
+ },200);
+}
+
+</script>
+</body>
+</html>
