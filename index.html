@@ -26,7 +26,6 @@ body{
  max-width:420px;
  box-shadow:0 0 25px rgba(255,105,180,0.4);
  animation:pop 1s ease;
- position:relative;
 }
 
 @keyframes pop{0%{transform:scale(.5)}100%{transform:scale(1)}}
@@ -218,7 +217,13 @@ No matter how far you try to go from me,
 I will come back to your door again and again 🚪❤️  
 because I am never giving up on you — not today, not tomorrow, not ever 🥹💖  
 
+And I have one more special wish with you 💕  
+Will you go to Mumbai with me so that I can make it more memorable for you 🌆✨  
+I want us to laugh together, explore together, and create beautiful memories that last forever 💞  
+
 You are my happiness, my peace, my smile, my everything 💕🌹  
+
+<b style="font-size:2rem;color:#ff1f6d;">I LOVE YOU ❤️❤️❤️</b>
 
 Forever Yours ❤️`;
 
@@ -228,7 +233,10 @@ function typeLoveMessage(){
  const interval=setInterval(()=>{
   text.innerHTML+=loveMessage[i];
   i++;
-  if(i>=loveMessage.length) clearInterval(interval);
+  if(i>=loveMessage.length){
+   clearInterval(interval);
+   finalHeartBurst();
+  }
  },35);
 }
 
@@ -288,6 +296,21 @@ function startKissRain(){
  },200);
 }
 
+function finalHeartBurst(){
+ for(let i=0;i<60;i++){
+  const heart=document.createElement("div");
+  heart.className="explosion-heart";
+  heart.innerHTML="❤️";
+  heart.style.left="50%";
+  heart.style.top="50%";
+  heart.style.setProperty("--x",(Math.random()-0.5)*500+"px");
+  heart.style.setProperty("--y",(Math.random()-0.5)*500+"px");
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),1800);
+ }
+}
+
 </script>
 </body>
 </html>
+
