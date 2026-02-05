@@ -24,7 +24,8 @@ body{
     border-radius:25px;
     box-shadow:0 15px 40px rgba(0,0,0,0.6);
     max-width:700px;
-    z-index:2;
+    z-index:5;
+    position:relative;
 }
 
 h1{color:#7b0000;}
@@ -55,6 +56,7 @@ button{
 .heart{
     position:absolute;
     bottom:0;
+    pointer-events:none;   /* 👈 IMPORTANT FIX */
     animation:float 5s linear infinite;
 }
 
@@ -66,7 +68,8 @@ button{
 canvas{
     position:absolute;
     inset:0;
-    pointer-events:none;
+    pointer-events:none;  /* 👈 IMPORTANT FIX */
+    z-index:1;
 }
 
 #celebrate{
@@ -83,12 +86,6 @@ canvas{
     color:#5a0000;
     line-height:1.6;
 }
-
-#cuteMsg{
-    margin-top:15px;
-    color:#aa0000;
-    font-size:18px;
-}
 </style>
 </head>
 
@@ -104,8 +101,6 @@ canvas{
     <button id="yesBtn">YES 😍</button>
     <button id="noBtn">NO 🙈</button>
 </div>
-
-<div id="cuteMsg"></div>
 
 <div id="celebrate">🎆 YAY!!! I LOVE YOU 💕 🎆</div>
 
@@ -127,7 +122,7 @@ Shukri, Tu Meri, Mein Tera, jaane saara Hindustan 💕
 </div>
 
 <script>
-// Floating hearts
+// Floating hearts (non blocking)
 function heart(){
     const h=document.createElement("div");
     h.className="heart";
@@ -152,7 +147,7 @@ resize();
 let particles=[];
 
 function burst(x,y){
-    for(let i=0;i<80;i++){
+    for(let i=0;i<70;i++){
         particles.push({
             x,y,
             speed:Math.random()*6+2,
@@ -180,7 +175,7 @@ function animate(){
 }
 animate();
 
-// YES click
+// YES button
 document.getElementById("yesBtn").onclick=()=>{
     document.getElementById("celebrate").style.display="block";
     document.getElementById("loveMessage").style.display="block";
@@ -190,35 +185,29 @@ document.getElementById("yesBtn").onclick=()=>{
     }
 };
 
-// MANY cute NO messages
-const messages=[
+// NO button changes text
+const options=[
  "Are you sure? 🥺",
- "Think again sweetheart 💕",
- "Pretty pleaseeee 😘",
+ "Think again 💕",
+ "Pretty please 😘",
  "One more chance 😍",
  "My heart says YES 💖",
- "Don’t break my heart 😢",
- "You know you want to 😉",
- "I planned something special 🎁",
- "There’s dessert involved 🍰",
- "Candle light + you + me 🕯️❤️",
  "It will be magical ✨",
- "Just say yes already 😄",
- "I promise it’ll be fun 🎉",
- "I’ll make you smile 😊",
- "I miss you already 💞",
- "This is our moment 💕",
- "Love is calling 📞❤️",
- "Your YES means everything 😍",
- "Come on cutie 🥰",
- "Romance alert 🚨❤️"
+ "There’s dessert 🍰",
+ "Candle light + love 🕯️❤️",
+ "You know you want to 😉",
+ "Just say yes 😄",
+ "Don’t break my heart 😢",
+ "Romance awaits 💞",
+ "I planned surprises 🎁",
+ "Love is calling ❤️"
 ];
 
 let index=0;
 
 document.getElementById("noBtn").onclick=()=>{
-    document.getElementById("cuteMsg").innerText=messages[index];
-    index=(index+1)%messages.length;
+    document.getElementById("noBtn").innerText=options[index];
+    index=(index+1)%options.length;
 };
 </script>
 
