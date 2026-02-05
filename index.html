@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Surprise Date ❤️</title>
 
 <style>
-body {
+body{
     margin:0;
     height:100vh;
     background: radial-gradient(circle at center, #ffb347, #8b0000);
@@ -18,7 +17,7 @@ body {
     overflow:hidden;
 }
 
-.container {
+.container{
     text-align:center;
     background: rgba(255,240,220,0.95);
     padding:40px;
@@ -28,17 +27,11 @@ body {
     z-index:2;
 }
 
-h1 {
-    color:#7b0000;
-    margin-bottom:20px;
-}
+h1{color:#7b0000;}
 
-.buttons {
-    margin-top:20px;
-    position:relative;
-}
+.buttons{margin-top:20px;}
 
-button {
+button{
     padding:12px 32px;
     font-size:18px;
     border:none;
@@ -47,56 +40,54 @@ button {
     transition:.3s;
 }
 
-#yesBtn {
+#yesBtn{
     background:#c70039;
     color:white;
 }
 
-#yesBtn:hover {
-    transform:scale(1.1);
+#noBtn{
+    background:#eee;
+    margin-left:15px;
 }
 
-#noBtn {
-    background:#ddd;
-    position:absolute;
-    left:120px;
-}
+#yesBtn:hover{transform:scale(1.1);}
 
-/* Hearts */
-.heart {
+.heart{
     position:absolute;
     bottom:0;
-    font-size:20px;
-    animation: float 5s linear infinite;
+    animation:float 5s linear infinite;
 }
 
-@keyframes float {
-    from {transform:translateY(0); opacity:1;}
-    to {transform:translateY(-700px); opacity:0;}
+@keyframes float{
+    from{transform:translateY(0);opacity:1;}
+    to{transform:translateY(-700px);opacity:0;}
 }
 
-/* Fireworks canvas */
-canvas {
+canvas{
     position:absolute;
     inset:0;
     pointer-events:none;
-    z-index:1;
 }
 
-/* Hidden content */
-#celebrate {
+#celebrate{
     display:none;
     font-size:28px;
     color:#b00000;
     margin-top:20px;
 }
 
-#loveMessage {
+#loveMessage{
     display:none;
     margin-top:20px;
     font-size:17px;
     color:#5a0000;
     line-height:1.6;
+}
+
+#cuteMsg{
+    margin-top:15px;
+    color:#aa0000;
+    font-size:18px;
 }
 </style>
 </head>
@@ -113,6 +104,8 @@ canvas {
     <button id="yesBtn">YES 😍</button>
     <button id="noBtn">NO 🙈</button>
 </div>
+
+<div id="cuteMsg"></div>
 
 <div id="celebrate">🎆 YAY!!! I LOVE YOU 💕 🎆</div>
 
@@ -135,22 +128,16 @@ Shukri, Tu Meri, Mein Tera, jaane saara Hindustan 💕
 
 <script>
 // Floating hearts
-function createHeart(){
-    const heart=document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML="❤️";
-    heart.style.left=Math.random()*window.innerWidth+"px";
-    heart.style.fontSize=(Math.random()*20+15)+"px";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),5000);
+function heart(){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*window.innerWidth+"px";
+    h.style.fontSize=(Math.random()*20+15)+"px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),5000);
 }
-setInterval(createHeart,350);
-
-// NO button movement
-const noBtn=document.getElementById("noBtn");
-noBtn.addEventListener("mouseover",()=>{
-    noBtn.style.left=Math.random()*250+"px";
-});
+setInterval(heart,350);
 
 // Fireworks
 const canvas=document.getElementById("fireworks");
@@ -161,7 +148,6 @@ function resize(){
     canvas.height=window.innerHeight;
 }
 resize();
-window.onresize=resize;
 
 let particles=[];
 
@@ -178,20 +164,18 @@ function burst(x,y){
 
 function animate(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-
     particles.forEach((p,i)=>{
         p.x+=Math.cos(p.angle)*p.speed;
         p.y+=Math.sin(p.angle)*p.speed;
         p.life--;
 
+        ctx.fillStyle="gold";
         ctx.beginPath();
         ctx.arc(p.x,p.y,2,0,Math.PI*2);
-        ctx.fillStyle="gold";
         ctx.fill();
 
         if(p.life<=0) particles.splice(i,1);
     });
-
     requestAnimationFrame(animate);
 }
 animate();
@@ -202,8 +186,39 @@ document.getElementById("yesBtn").onclick=()=>{
     document.getElementById("loveMessage").style.display="block";
 
     for(let i=0;i<5;i++){
-        burst(Math.random()*canvas.width, Math.random()*canvas.height/2);
+        burst(Math.random()*canvas.width,Math.random()*canvas.height/2);
     }
+};
+
+// MANY cute NO messages
+const messages=[
+ "Are you sure? 🥺",
+ "Think again sweetheart 💕",
+ "Pretty pleaseeee 😘",
+ "One more chance 😍",
+ "My heart says YES 💖",
+ "Don’t break my heart 😢",
+ "You know you want to 😉",
+ "I planned something special 🎁",
+ "There’s dessert involved 🍰",
+ "Candle light + you + me 🕯️❤️",
+ "It will be magical ✨",
+ "Just say yes already 😄",
+ "I promise it’ll be fun 🎉",
+ "I’ll make you smile 😊",
+ "I miss you already 💞",
+ "This is our moment 💕",
+ "Love is calling 📞❤️",
+ "Your YES means everything 😍",
+ "Come on cutie 🥰",
+ "Romance alert 🚨❤️"
+];
+
+let index=0;
+
+document.getElementById("noBtn").onclick=()=>{
+    document.getElementById("cuteMsg").innerText=messages[index];
+    index=(index+1)%messages.length;
 };
 </script>
 
