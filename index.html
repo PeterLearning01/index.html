@@ -23,7 +23,7 @@ body{
     padding:40px;
     border-radius:25px;
     box-shadow:0 15px 40px rgba(0,0,0,0.6);
-    max-width:700px;
+    max-width:720px;
     z-index:5;
     position:relative;
 }
@@ -33,7 +33,7 @@ h1{color:#7b0000;}
 .buttons{
     margin-top:20px;
     position:relative;
-    height:80px;
+    height:90px;
 }
 
 button{
@@ -84,12 +84,39 @@ canvas{
     margin-top:20px;
 }
 
-#loveMessage{
+/* Dinner animation */
+#dinnerScene{
+    display:none;
+    margin:20px auto;
+    font-size:60px;
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow{
+    from{text-shadow:0 0 5px orange;}
+    to{text-shadow:0 0 20px gold;}
+}
+
+#typedMessage{
     display:none;
     margin-top:20px;
     font-size:17px;
     color:#5a0000;
     line-height:1.6;
+    min-height:220px;
+}
+
+/* Sparkles */
+.sparkle{
+    position:absolute;
+    font-size:18px;
+    pointer-events:none;
+    animation:spark 1s linear forwards;
+}
+
+@keyframes spark{
+    from{opacity:1;transform:translateY(0);}
+    to{opacity:0;transform:translateY(-40px);}
 }
 </style>
 </head>
@@ -109,25 +136,19 @@ canvas{
 
 <div id="celebrate">🎆 YAY!!! I LOVE YOU 💕 🎆</div>
 
-<div id="loveMessage">
-So here we go… finally we are going on a date and I am planning it for us.  
-Candle light — yes it is candle light and a well planned one, with few more surprises ahead.  
+<div id="dinnerScene">🍽️🕯️❤️🕯️🍷</div>
 
-I am going to make up as loud as the hurt I have caused you, because you mean everything to me.  
-
-I love you <b>KRISHNA GOHIL</b>.  
-I will take care of you and us throughout life.  
-
-Thank you for saying yesssssssssssssssssssssssssssssssss ❤️  
-
-I am yours forever —  
-Shukri, Tu Meri, Mein Tera, jaane saara Hindustan 💕
-</div>
+<div id="typedMessage"></div>
 
 </div>
+
+<!-- Funny sound -->
+<audio id="funSound">
+<source src="https://www.myinstants.com/media/sounds/cartoon-pop.mp3" type="audio/mpeg">
+</audio>
 
 <script>
-// Hearts
+// Floating hearts
 function heart(){
     const h=document.createElement("div");
     h.className="heart";
@@ -180,17 +201,56 @@ function animate(){
 }
 animate();
 
+// Typing effect text
+const message = `So here we go… finally we are going on a date and I am planning it for us.
+Candle light — yes it is candle light and a well planned one, with few more surprises ahead.
+
+I am going to make up as loud as the hurt I have caused you, because you mean everything to me.
+
+I love you KRISHNA GOHIL.
+I will take care of you and us throughout life.
+
+Thank you for saying yesssssssssssssssssssssssssssssssss ❤️
+
+I am yours forever —
+Shukri, Tu Meri, Mein Tera, jaane saara Hindustan 💕`;
+
+let charIndex=0;
+
+function typeText(){
+    const box=document.getElementById("typedMessage");
+    if(charIndex < message.length){
+        box.innerHTML += message.charAt(charIndex).replace("\n","<br>");
+        charIndex++;
+        setTimeout(typeText,35);
+    }
+}
+
 // YES click
 document.getElementById("yesBtn").onclick=()=>{
     document.getElementById("celebrate").style.display="block";
-    document.getElementById("loveMessage").style.display="block";
+    document.getElementById("dinnerScene").style.display="block";
+    document.getElementById("typedMessage").style.display="block";
 
-    for(let i=0;i<5;i++){
+    for(let i=0;i<6;i++){
         burst(Math.random()*canvas.width,Math.random()*canvas.height/2);
     }
+
+    typeText();
 };
 
-// NO floating + changing
+// Sparkle effect
+function sparkle(x,y){
+    const s=document.createElement("div");
+    s.className="sparkle";
+    s.innerHTML="✨";
+    s.style.left=x+"px";
+    s.style.top=y+"px";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),1000);
+}
+
+// NO floating + cute + sound
 const options=[
  "Are you sure? 🥺",
  "Think again 💕",
@@ -210,22 +270,26 @@ const options=[
 
 let index=0;
 const noBtn=document.getElementById("noBtn");
-const container=document.querySelector(".buttons");
+const area=document.querySelector(".buttons");
+const sound=document.getElementById("funSound");
 
-noBtn.onclick=()=>{
-    // Change text
+noBtn.onclick=(e)=>{
+    sound.currentTime=0;
+    sound.play();
+
     noBtn.innerText=options[index];
     index=(index+1)%options.length;
 
-    // Move randomly inside button area
-    const maxX=container.clientWidth - noBtn.offsetWidth;
-    const maxY=container.clientHeight - noBtn.offsetHeight;
+    const maxX=area.clientWidth-noBtn.offsetWidth;
+    const maxY=area.clientHeight-noBtn.offsetHeight;
 
     const x=Math.random()*maxX;
     const y=Math.random()*maxY;
 
     noBtn.style.left=x+"px";
     noBtn.style.top=y+"px";
+
+    sparkle(e.clientX,e.clientY);
 };
 </script>
 
