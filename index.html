@@ -22,296 +22,112 @@ body {
 .container {
   background: linear-gradient(180deg, #1a050b, #2a0a14);
   width: 420px;
-  padding: 28px;
-  border-radius: 22px;
+  padding: 30px;
+  border-radius: 24px;
   box-shadow:
-    0 0 60px rgba(255, 140, 170, 0.15),
-    inset 0 0 40px rgba(255, 200, 215, 0.05);
+    0 0 70px rgba(255, 140, 170, 0.18),
+    inset 0 0 40px rgba(255, 200, 215, 0.06);
   text-align: center;
   animation: bloomIn 1s ease;
-  position: relative;
 }
 
 @keyframes bloomIn {
-  from { opacity: 0; transform: scale(0.96); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-h2 {
+#text {
   font-family: Playfair Display, serif;
-  font-weight: 500;
-  color: #f3c6d3;
-  line-height: 1.4;
-}
-
-.option {
-  background: linear-gradient(135deg, #3b0d1a, #4a1021);
-  padding: 14px;
-  margin: 12px 0;
-  border-radius: 16px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.option:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 25px rgba(255, 170, 190, 0.25);
-}
-
-.option::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle, rgba(255,200,220,0.6), transparent 70%);
-  opacity: 0;
-  transform: scale(0.2);
-}
-
-.option.blast::after {
-  animation: blast 0.6s ease-out forwards;
-}
-
-@keyframes blast {
-  0% { opacity: 0.8; transform: scale(0.2); }
-  100% { opacity: 0; transform: scale(2.2); }
-}
-
-.popup {
-  margin-top: 18px;
-  font-size: 13px;
-  line-height: 1.6;
-  color: #f1cfd9;
-  display: none;
-  animation: reveal 0.8s ease forwards;
-}
-
-@keyframes reveal {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  font-size: 18px;
+  line-height: 1.7;
+  color: #f4c2d3;
+  min-height: 120px;
 }
 
 button {
-  margin-top: 22px;
-  padding: 11px 26px;
+  margin-top: 30px;
+  padding: 12px 28px;
   border: none;
-  border-radius: 28px;
+  border-radius: 30px;
   background: linear-gradient(135deg, #c84b7a, #9b355d);
   color: #fff;
   font-size: 14px;
   cursor: pointer;
-  letter-spacing: 0.5px;
-  box-shadow: 0 0 20px rgba(200, 75, 122, 0.4);
+  letter-spacing: 0.6px;
+  box-shadow: 0 0 25px rgba(200, 75, 122, 0.45);
   transition: all 0.3s ease;
   display: none;
 }
 
 button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 0 30px rgba(255, 120, 165, 0.6);
-}
-
-#final {
-  font-family: Playfair Display, serif;
-  font-size: 16px;
-  line-height: 1.7;
-  color: #f4c2d3;
-  margin-top: 10px;
+  box-shadow: 0 0 35px rgba(255, 120, 165, 0.6);
 }
 </style>
 </head>
 
 <body>
 <div class="container">
-  <h2 id="question"></h2>
-  <div id="options"></div>
-  <div class="popup" id="popup"></div>
+  <div id="text"></div>
   <button id="nextBtn">Next</button>
 </div>
 
 <script>
-const introText =
-"This is not a test, just a small journey into what you want and what feels good to you.";
+const slides = [
+  "This is not a test, just a small journey into what you want and what feels good to you.",
 
-const questions = [
-{
-q: "Your ideal way to spend time with me would be",
-options: [
-"Spending time talking deeply and sharing thoughts that slowly build comfort and emotional closeness",
-"Choosing spontaneous plans with shared excitement and energy",
-"Enjoying quiet moments together without needing constant conversation",
-"Wanting to spend time with me no matter what we are doing because the presence matters"
-],
-popup: [
-"You are drawn to emotional closeness and meaningful conversation",
-"You enjoy shared excitement and natural spontaneity",
-"You feel comforted by calm presence and quiet connection",
-"You value intention and presence above everything else"
-]
-},
-{
-q: "When you start liking me you usually",
-options: [
-"Express it through playful teasing and light moments",
-"Try to know me deeply by asking questions and paying attention",
-"Take your time while feeling emotions quietly",
-"Act calm on the outside while feeling everything inside"
-],
-popup: [
-"You show interest through ease and warmth",
-"You express care through understanding and curiosity",
-"You respect emotions enough to let them grow naturally",
-"You feel deeply but choose gentle expression"
-]
-},
-{
-q: "Your perfect date with me would include",
-options: [
-"Lighthearted laughter and easy flirting",
-"Deep conversations and comfortable silence",
-"Sharing an experience that becomes a memory",
-"A balance of fun emotion depth and closeness"
-],
-popup: [
-"You enjoy joy and playful connection",
-"You value emotional intimacy and presence",
-"You love creating shared memories",
-"You want a full emotional experience"
-]
-},
-{
-q: "What makes you feel closest to me",
-options: [
-"Gentle closeness and quiet comfort",
-"Feeling understood without explaining",
-"Laughing at things only we understand",
-"Seeing consistent effort over time"
-],
-popup: [
-"Comfort makes you feel safe",
-"Understanding makes you feel seen",
-"Shared joy makes you feel bonded",
-"Consistency makes you feel secure"
-]
-},
-{
-q: "When I flirt with you you prefer",
-options: [
-"Clear confident expressions",
-"Playful teasing",
-"Subtle charm",
-"Sincere focused attention"
-],
-popup: [
-"Clarity makes you feel safe",
-"Playfulness keeps things light",
-"Subtle attraction keeps you intrigued",
-"Sincerity makes you feel valued"
-]
-},
-{
-q: "In a relationship with me you secretly want me to",
-options: [
-"Make you feel emotionally safe without judgment",
-"Choose you even on difficult days",
-"Communicate openly and honestly",
-"Offer effort balance and sincerity"
-],
-popup: [
-"Emotional safety matters deeply to you",
-"Loyalty matters deeply to you",
-"Honest communication matters deeply to you",
-"Balanced effort matters deeply to you"
-]
-}
+  "Spending time together means different things to different people. For me, it is about presence, comfort, and the quiet feeling of being chosen.",
+
+  "Some people feel closest through conversation, some through silence, and some simply through knowing someone is there without needing words.",
+
+  "Attraction does not always arrive loudly. Sometimes it grows slowly, in the way someone listens, stays, and pays attention.",
+
+  "The way you enjoy affection, flirting, and closeness says a lot about what makes you feel safe and appreciated.",
+
+  "In something real, it is often the consistency, honesty, and emotional safety that matter more than big gestures.",
+
+  "Every thought you have felt while reading this tells me something meaningful, even the ones you did not say out loud.",
+
+  "Some things are better understood quietly, and some connections are felt more deeply when they are not explained."
 ];
 
-let current = -1;
-const selections = [];
-
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const popupEl = document.getElementById("popup");
+let currentSlide = 0;
+const textEl = document.getElementById("text");
 const nextBtn = document.getElementById("nextBtn");
+let typingInterval;
 
-function showIntro() {
-  questionEl.innerText = introText;
-  optionsEl.innerHTML = "";
-  popupEl.style.display = "none";
-  nextBtn.innerText = "Begin";
-  nextBtn.style.display = "inline-block";
+function typeSlide(text) {
+  clearInterval(typingInterval);
+  textEl.innerText = "";
+  nextBtn.style.display = "none";
+  let i = 0;
+
+  typingInterval = setInterval(() => {
+    textEl.innerText += text.charAt(i);
+    i++;
+    if (i === text.length) {
+      clearInterval(typingInterval);
+      nextBtn.style.display = "inline-block";
+    }
+  }, 40);
 }
 
 nextBtn.onclick = () => {
-  if (current === -1) {
-    current = 0;
-    loadQuestion();
+  currentSlide++;
+  if (currentSlide < slides.length) {
+    typeSlide(slides[currentSlide]);
   } else {
-    current++;
-    if (current < questions.length) {
-      loadQuestion();
-    } else {
-      showFinal();
-    }
+    nextBtn.style.display = "none";
   }
 };
 
-function loadQuestion() {
-  popupEl.style.display = "none";
-  nextBtn.style.display = "none";
-  optionsEl.innerHTML = "";
-  questionEl.innerText = questions[current].q;
-
-  questions[current].options.forEach((opt, i) => {
-    const div = document.createElement("div");
-    div.className = "option";
-    div.innerText = opt;
-    div.onclick = () => selectOption(div, i);
-    optionsEl.appendChild(div);
-  });
-}
-
-function selectOption(element, index) {
-  if (selections[current] !== undefined) return;
-  selections[current] = index;
-
-  element.classList.add("blast");
-
-  setTimeout(() => {
-    popupEl.innerText = questions[current].popup[index];
-    popupEl.style.display = "block";
-    nextBtn.style.display = "inline-block";
-  }, 350);
-}
-
-function showFinal() {
-  questionEl.innerText = "Thank You For Sharing";
-  optionsEl.innerHTML = "";
-  popupEl.style.display = "none";
-  nextBtn.style.display = "none";
-
-  const message =
-    "Every choice you made stayed just between us. I now understand you a little better, and that means more than you think.";
-
-  typeText(message);
-}
-
-function typeText(text) {
-  let i = 0;
-  const finalDiv = document.createElement("div");
-  finalDiv.id = "final";
-  optionsEl.appendChild(finalDiv);
-
-  const interval = setInterval(() => {
-    finalDiv.innerText += text.charAt(i);
-    i++;
-    if (i === text.length) clearInterval(interval);
-  }, 45);
-}
-
-showIntro();
+typeSlide(slides[currentSlide]);
 </script>
 </body>
 </html>
