@@ -8,58 +8,88 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400&display=swap");
 
 body {
-  background: radial-gradient(circle at top, #3a0f1c, #120006);
   font-family: Inter, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   margin: 0;
-  color: #f6e6eb;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #dbeeff;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.6) 20%, transparent 20%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='0' y='40' font-size='32'%3E🤔%3C/text%3E%3C/svg%3E");
+  background-size: 120px 120px, 80px 80px;
+}
+
+/* 🌸 FLOWERS FALLING */
+.flower {
+  position: fixed;
+  top: -10%;
+  font-size: 20px;
+  animation: fall linear infinite;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0.2; }
 }
 
 .container {
-  width: 440px;
-  background: linear-gradient(180deg, #1a050b, #2a0a14);
-  padding: 30px;
-  border-radius: 24px;
-  box-shadow: 0 0 70px rgba(255,140,170,0.18);
-  animation: bloom 1s ease;
-}
-
-@keyframes bloom {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  position: relative;
+  z-index: 2;
+  width: 460px;
+  background: rgba(220, 240, 255, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 32px;
+  border-radius: 28px;
+  box-shadow: 0 20px 60px rgba(0, 90, 160, 0.25);
+  margin: auto;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 h2 {
   font-family: Playfair Display, serif;
+  color: #245a8d;
   font-weight: 500;
-  color: #f3c6d3;
-  line-height: 1.5;
-  margin-bottom: 18px;
+  line-height: 1.6;
 }
 
 .option {
   margin-top: 14px;
   padding: 14px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #3b0d1a, #4a1021);
+  border-radius: 18px;
+  background: linear-gradient(135deg, #a8d8ff, #cce9ff);
   cursor: pointer;
   transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .option:hover {
   transform: scale(1.03);
-  box-shadow: 0 0 20px rgba(255,170,190,0.25);
+  box-shadow: 0 0 20px rgba(120,180,255,0.5);
+}
+
+/* 💥 BLAST */
+.option.blast::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.9), transparent 70%);
+  animation: blast 0.6s ease-out forwards;
+}
+
+@keyframes blast {
+  from { opacity: 1; transform: scale(0.2); }
+  to { opacity: 0; transform: scale(2.8); }
 }
 
 .statement-box {
-  margin-top: 20px;
-  padding: 16px;
-  border-radius: 16px;
-  background: rgba(255, 180, 200, 0.05);
-  box-shadow: inset 0 0 20px rgba(255, 150, 180, 0.08);
+  margin-top: 22px;
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.7);
   display: none;
 }
 
@@ -67,28 +97,40 @@ h2 {
   font-family: Playfair Display, serif;
   font-size: 15px;
   line-height: 1.9;
-  color: #f4c2d3;
+  color: #2b4f73;
   white-space: pre-wrap;
-  overflow-wrap: break-word;
-  letter-spacing: 0.3px;
   word-spacing: 2px;
 }
 
 button {
   margin-top: 26px;
-  padding: 12px 30px;
+  padding: 12px 32px;
   border-radius: 28px;
   border: none;
-  background: linear-gradient(135deg, #c84b7a, #9b355d);
+  background: linear-gradient(135deg, #5fa9ff, #3f8ad8);
   color: white;
   cursor: pointer;
   display: none;
-  box-shadow: 0 0 25px rgba(200,75,122,0.45);
+  box-shadow: 0 0 25px rgba(80,150,255,0.6);
 }
 </style>
 </head>
 
 <body>
+
+<!-- 🌸 FLOWERS -->
+<script>
+for (let i = 0; i < 25; i++) {
+  const flower = document.createElement("div");
+  flower.className = "flower";
+  flower.textContent = "🌸";
+  flower.style.left = Math.random() * 100 + "vw";
+  flower.style.animationDuration = 6 + Math.random() * 6 + "s";
+  flower.style.fontSize = 16 + Math.random() * 18 + "px";
+  document.body.appendChild(flower);
+}
+</script>
+
 <div class="container">
   <h2 id="question"></h2>
   <div id="options"></div>
@@ -102,71 +144,71 @@ button {
 
 <script>
 const intro = {
-  q: "This is not a test. Just a few gentle thoughts that help me understand what feels right to you."
+  q: "Do you want to step into a few thoughts that gently reveal what you truly like, feel, and need?"
 };
 
 const questions = [
 {
   q: "Your ideal way of spending time with me feels like",
   options: [
-    { text: "Long conversations", statement: "You enjoy moments where time slows down, where conversations flow naturally, and where being emotionally present matters more to you than any plan or place." },
-    { text: "Spontaneous plans", statement: "You are drawn to shared excitement and energy, loving moments that feel alive, unplanned, and full of shared curiosity and laughter." },
-    { text: "Quiet presence", statement: "You feel closest in silence, where comfort exists without words and simply being together feels complete." },
-    { text: "Just being with me", statement: "For you, the activity fades away completely, and what truly matters is the feeling of choosing each other and enjoying presence above everything else." }
+    { text: "Long conversations", statement: "You enjoy moments where time slows down, where conversations flow naturally, and where emotional presence feels more important than anything else." },
+    { text: "Spontaneous plans", statement: "You love the excitement of shared surprises, where joy comes from doing things together without overthinking." },
+    { text: "Quiet presence", statement: "You feel closest in calm silence, where comfort exists without words and being together feels enough." },
+    { text: "Just being with me", statement: "For you, what truly matters is choosing each other and enjoying presence more than the activity itself." }
   ]
 },
 {
-  q: "When you start feeling something for me",
+  q: "When emotions start growing",
   options: [
-    { text: "Playful teasing", statement: "You express interest through warmth and playful energy, letting attraction grow naturally without pressure or expectations." },
-    { text: "Understanding deeply", statement: "You listen closely, notice the little details, and let emotional connection build through genuine understanding." },
-    { text: "Taking your time", statement: "You prefer to feel things quietly, allowing emotions to settle before expressing them." },
-    { text: "Feeling deeply but calmly", statement: "Even when emotions are strong inside, you choose maturity, calmness, and intention in how you express them." }
+    { text: "Playful warmth", statement: "You express feelings through teasing, laughter, and gentle affection that feels natural and light." },
+    { text: "Deep understanding", statement: "You connect emotionally by listening, noticing details, and understanding feelings beneath words." },
+    { text: "Slow comfort", statement: "You prefer emotions to grow calmly, allowing trust and safety to build over time." },
+    { text: "Quiet depth", statement: "You feel deeply but express emotions with maturity and intention." }
   ]
 },
 {
-  q: "What makes you feel emotionally close to me",
+  q: "What makes you feel emotionally close",
   options: [
-    { text: "Feeling understood", statement: "You feel closest when you know you are being seen and understood without having to explain every emotion." },
-    { text: "Shared laughter", statement: "You connect deeply through moments of laughter and lightness that only make sense between us." },
-    { text: "Consistent effort", statement: "You feel secure when effort is steady and actions quietly show care over time." },
-    { text: "Gentle affection", statement: "You feel closest through small gestures that feel intentional, warm, and sincere." }
+    { text: "Feeling understood", statement: "You feel closest when you are understood without having to explain everything." },
+    { text: "Shared laughter", statement: "You bond through laughter and light moments that feel unique to us." },
+    { text: "Consistent effort", statement: "You value steady presence and quiet reliability." },
+    { text: "Gentle affection", statement: "You feel loved through subtle gestures that feel sincere." }
   ]
 },
 {
-  q: "When things get difficult you value",
+  q: "When things feel difficult",
   options: [
-    { text: "Honest communication", statement: "You believe openness and honesty help create understanding even during uncomfortable moments." },
-    { text: "Emotional reassurance", statement: "You value knowing that someone is emotionally present and supportive when things feel heavy." },
-    { text: "Space to process", statement: "You appreciate having time and space to understand your emotions before talking about them." },
-    { text: "Quiet stability", statement: "You feel calmer when things are handled with patience and emotional steadiness." }
+    { text: "Honest words", statement: "You appreciate calm honesty that helps resolve emotions." },
+    { text: "Emotional reassurance", statement: "You feel safe when emotional support is clearly felt." },
+    { text: "Space to think", statement: "You value time to understand feelings before discussing them." },
+    { text: "Stability", statement: "You prefer situations handled patiently and calmly." }
   ]
 },
 {
-  q: "The way you prefer affection from me is",
+  q: "Affection from me feels best when it is",
   options: [
-    { text: "Verbal reassurance", statement: "You feel most appreciated when care is expressed clearly through words and reassurance." },
-    { text: "Physical closeness", statement: "You feel loved through closeness, warmth, and gentle physical presence." },
-    { text: "Acts of effort", statement: "You notice love in the effort someone puts into being present and thoughtful." },
-    { text: "Subtle gestures", statement: "You appreciate affection that feels quiet, intentional, and naturally woven into moments." }
+    { text: "Spoken", statement: "You love reassurance expressed through words." },
+    { text: "Felt physically", statement: "You connect deeply through closeness and warmth." },
+    { text: "Shown through effort", statement: "You notice love in actions and presence." },
+    { text: "Quietly expressed", statement: "You value affection that feels subtle and intentional." }
   ]
 },
 {
-  q: "What makes you feel safe with me",
+  q: "What makes you feel safe",
   options: [
-    { text: "Consistency", statement: "You feel safe when actions match words and presence feels steady over time." },
-    { text: "Emotional honesty", statement: "You feel secure when emotions can be shared without fear of judgment." },
-    { text: "Respecting boundaries", statement: "You feel safe when your boundaries are understood and respected." },
-    { text: "Calm communication", statement: "You feel most at ease when things are talked through calmly and maturely." }
+    { text: "Consistency", statement: "You feel safe when actions match words." },
+    { text: "Emotional honesty", statement: "You value openness without fear of judgment." },
+    { text: "Respected boundaries", statement: "You feel secure when your space is respected." },
+    { text: "Calm communication", statement: "You prefer conversations that feel gentle and mature." }
   ]
 },
 {
-  q: "In something meaningful with me you hope for",
+  q: "In something meaningful you hope for",
   options: [
-    { text: "Emotional depth", statement: "You want a connection that feels emotionally rich and deeply understood." },
-    { text: "Mutual effort", statement: "You value balance, where both people choose each other consistently." },
-    { text: "Growth together", statement: "You hope to grow emotionally while building something steady together." },
-    { text: "Peace and comfort", statement: "You want something that feels peaceful, grounding, and emotionally safe." }
+    { text: "Depth", statement: "You want emotional richness and understanding." },
+    { text: "Mutual effort", statement: "You value balance and shared choice." },
+    { text: "Growth together", statement: "You want to grow emotionally together." },
+    { text: "Peace", statement: "You seek comfort, safety, and calm." }
   ]
 }
 ];
@@ -193,8 +235,7 @@ nextBtn.onclick = () => {
     loadQuestion();
   } else {
     index++;
-    if (index < questions.length) loadQuestion();
-    else showEnd();
+    index < questions.length ? loadQuestion() : showEnd();
   }
 };
 
@@ -202,7 +243,6 @@ function loadQuestion() {
   const q = questions[index];
   questionEl.innerText = q.q;
   optionsEl.innerHTML = "";
-  statementEl.textContent = "";
   statementBox.style.display = "none";
   nextBtn.style.display = "none";
 
@@ -215,21 +255,21 @@ function loadQuestion() {
   });
 }
 
-function selectOption(statement, selectedDiv) {
-  optionsEl.innerHTML = "";
-  optionsEl.appendChild(selectedDiv);
-  typeStatement(statement);
+function selectOption(statement, div) {
+  div.classList.add("blast");
+  setTimeout(() => {
+    optionsEl.innerHTML = "";
+    optionsEl.appendChild(div);
+    typeStatement(statement);
+  }, 500);
 }
 
 function typeStatement(text) {
-  clearInterval(typingInterval);
   statementEl.textContent = "";
   statementBox.style.display = "block";
   let i = 0;
-
   typingInterval = setInterval(() => {
-    statementEl.textContent += text[i];
-    i++;
+    statementEl.textContent += text[i++];
     if (i >= text.length) {
       clearInterval(typingInterval);
       nextBtn.style.display = "inline-block";
@@ -242,7 +282,11 @@ function showEnd() {
   optionsEl.innerHTML = "";
   statementBox.style.display = "block";
   statementEl.textContent =
-    "Every choice you made gave me a glimpse into what matters to you. Some things are better felt than explained.";
+`I am glad to know how you need to be treated and this is a promise from my side to you that I will make you feel worthy and feel happiest and peaceful with every bit of excitement.
+
+I want to keep you safe with me, that's why I wanted to step up and get to know how to make you feel loved and what exactly needs to be done so that we have a beautiful life ahead.
+
+I LOVE YOU SO MUCH AND I WILL ALWAYS STAY THE LOVEABLE AND THE MOST LOYAL PERSON EVER ❤️❤️❤️❤️❤️`;
   nextBtn.style.display = "none";
 }
 
