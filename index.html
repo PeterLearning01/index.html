@@ -40,7 +40,6 @@ h2 {
   margin-bottom: 18px;
 }
 
-/* OPTIONS */
 .option {
   margin-top: 14px;
   padding: 14px;
@@ -55,7 +54,6 @@ h2 {
   box-shadow: 0 0 20px rgba(255,170,190,0.25);
 }
 
-/* STATEMENT BOX */
 .statement-box {
   margin-top: 20px;
   padding: 16px;
@@ -65,24 +63,17 @@ h2 {
   display: none;
 }
 
-/* STATEMENT TEXT — FIXED */
 .statement {
   font-family: Playfair Display, serif;
   font-size: 15px;
   line-height: 1.9;
   color: #f4c2d3;
-
   white-space: pre-wrap;
-  word-break: normal;
   overflow-wrap: break-word;
-
   letter-spacing: 0.3px;
   word-spacing: 2px;
-
-  max-width: 100%;
 }
 
-/* BUTTON */
 button {
   margin-top: 26px;
   padding: 12px 30px;
@@ -93,10 +84,6 @@ button {
   cursor: pointer;
   display: none;
   box-shadow: 0 0 25px rgba(200,75,122,0.45);
-}
-
-button:hover {
-  box-shadow: 0 0 35px rgba(255,120,165,0.6);
 }
 </style>
 </head>
@@ -114,53 +101,72 @@ button:hover {
 </div>
 
 <script>
-/* INTRO SLIDE */
 const intro = {
-  q: "Do you want to answer a few thoughts that quietly tell me what you want and what feels right to you"
+  q: "This is not a test. Just a few gentle thoughts that help me understand what feels right to you."
 };
 
-/* QUESTIONS */
 const questions = [
 {
   q: "Your ideal way of spending time with me feels like",
   options: [
-    {
-      text: "Long conversations",
-      statement: "You enjoy moments where time slows down, where conversations flow naturally, and where being emotionally present matters more to you than any plan or place."
-    },
-    {
-      text: "Spontaneous plans",
-      statement: "You are drawn to shared excitement and energy, loving moments that feel alive, unplanned, and full of shared curiosity and laughter."
-    },
-    {
-      text: "Quiet presence",
-      statement: "You feel closest in silence, where comfort exists without words and simply being together feels complete."
-    },
-    {
-      text: "Just being with me",
-      statement: "For you, the activity fades away completely, and what truly matters is the feeling of choosing each other and enjoying presence above everything else."
-    }
+    { text: "Long conversations", statement: "You enjoy moments where time slows down, where conversations flow naturally, and where being emotionally present matters more to you than any plan or place." },
+    { text: "Spontaneous plans", statement: "You are drawn to shared excitement and energy, loving moments that feel alive, unplanned, and full of shared curiosity and laughter." },
+    { text: "Quiet presence", statement: "You feel closest in silence, where comfort exists without words and simply being together feels complete." },
+    { text: "Just being with me", statement: "For you, the activity fades away completely, and what truly matters is the feeling of choosing each other and enjoying presence above everything else." }
   ]
 },
 {
   q: "When you start feeling something for me",
   options: [
-    {
-      text: "Playful teasing",
-      statement: "You express interest through warmth and playful energy, letting attraction grow naturally without pressure or expectations."
-    },
-    {
-      text: "Understanding deeply",
-      statement: "You listen closely, notice the little details, and let emotional connection build through genuine understanding."
-    },
-    {
-      text: "Taking your time",
-      statement: "You prefer to feel things quietly, allowing emotions to settle before expressing them."
-    },
-    {
-      text: "Feeling deeply but calmly",
-      statement: "Even when emotions are strong inside, you choose maturity, calmness, and intention in how you express them."
-    }
+    { text: "Playful teasing", statement: "You express interest through warmth and playful energy, letting attraction grow naturally without pressure or expectations." },
+    { text: "Understanding deeply", statement: "You listen closely, notice the little details, and let emotional connection build through genuine understanding." },
+    { text: "Taking your time", statement: "You prefer to feel things quietly, allowing emotions to settle before expressing them." },
+    { text: "Feeling deeply but calmly", statement: "Even when emotions are strong inside, you choose maturity, calmness, and intention in how you express them." }
+  ]
+},
+{
+  q: "What makes you feel emotionally close to me",
+  options: [
+    { text: "Feeling understood", statement: "You feel closest when you know you are being seen and understood without having to explain every emotion." },
+    { text: "Shared laughter", statement: "You connect deeply through moments of laughter and lightness that only make sense between us." },
+    { text: "Consistent effort", statement: "You feel secure when effort is steady and actions quietly show care over time." },
+    { text: "Gentle affection", statement: "You feel closest through small gestures that feel intentional, warm, and sincere." }
+  ]
+},
+{
+  q: "When things get difficult you value",
+  options: [
+    { text: "Honest communication", statement: "You believe openness and honesty help create understanding even during uncomfortable moments." },
+    { text: "Emotional reassurance", statement: "You value knowing that someone is emotionally present and supportive when things feel heavy." },
+    { text: "Space to process", statement: "You appreciate having time and space to understand your emotions before talking about them." },
+    { text: "Quiet stability", statement: "You feel calmer when things are handled with patience and emotional steadiness." }
+  ]
+},
+{
+  q: "The way you prefer affection from me is",
+  options: [
+    { text: "Verbal reassurance", statement: "You feel most appreciated when care is expressed clearly through words and reassurance." },
+    { text: "Physical closeness", statement: "You feel loved through closeness, warmth, and gentle physical presence." },
+    { text: "Acts of effort", statement: "You notice love in the effort someone puts into being present and thoughtful." },
+    { text: "Subtle gestures", statement: "You appreciate affection that feels quiet, intentional, and naturally woven into moments." }
+  ]
+},
+{
+  q: "What makes you feel safe with me",
+  options: [
+    { text: "Consistency", statement: "You feel safe when actions match words and presence feels steady over time." },
+    { text: "Emotional honesty", statement: "You feel secure when emotions can be shared without fear of judgment." },
+    { text: "Respecting boundaries", statement: "You feel safe when your boundaries are understood and respected." },
+    { text: "Calm communication", statement: "You feel most at ease when things are talked through calmly and maturely." }
+  ]
+},
+{
+  q: "In something meaningful with me you hope for",
+  options: [
+    { text: "Emotional depth", statement: "You want a connection that feels emotionally rich and deeply understood." },
+    { text: "Mutual effort", statement: "You value balance, where both people choose each other consistently." },
+    { text: "Growth together", statement: "You hope to grow emotionally while building something steady together." },
+    { text: "Peace and comfort", statement: "You want something that feels peaceful, grounding, and emotionally safe." }
   ]
 }
 ];
@@ -174,7 +180,6 @@ const statementEl = document.getElementById("statement");
 const statementBox = document.getElementById("statementBox");
 const nextBtn = document.getElementById("nextBtn");
 
-/* LOAD INTRO */
 function loadIntro() {
   questionEl.innerText = intro.q;
   optionsEl.innerHTML = "";
@@ -188,11 +193,8 @@ nextBtn.onclick = () => {
     loadQuestion();
   } else {
     index++;
-    if (index < questions.length) {
-      loadQuestion();
-    } else {
-      showEnd();
-    }
+    if (index < questions.length) loadQuestion();
+    else showEnd();
   }
 };
 
@@ -219,14 +221,12 @@ function selectOption(statement, selectedDiv) {
   typeStatement(statement);
 }
 
-/* TYPING WITH SPACE PRESERVATION */
 function typeStatement(text) {
   clearInterval(typingInterval);
   statementEl.textContent = "";
   statementBox.style.display = "block";
-  nextBtn.style.display = "none";
-
   let i = 0;
+
   typingInterval = setInterval(() => {
     statementEl.textContent += text[i];
     i++;
@@ -242,7 +242,7 @@ function showEnd() {
   optionsEl.innerHTML = "";
   statementBox.style.display = "block";
   statementEl.textContent =
-    "Every choice you made told me something meaningful. Some feelings are better understood quietly, without needing to explain them.";
+    "Every choice you made gave me a glimpse into what matters to you. Some things are better felt than explained.";
   nextBtn.style.display = "none";
 }
 
