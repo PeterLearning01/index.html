@@ -2,249 +2,303 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Our Compatibility Test 💕</title>
+<title>Just For You</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400&display=swap");
+
+body {
+  background: radial-gradient(circle at top, #3a0f1c, #120006);
+  font-family: Inter, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  color: #f6e6eb;
 }
 
-body{
-  margin:0;
-  height:100vh;
-  background:linear-gradient(135deg,#ffdde1,#ee9ca7);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
+.container {
+  background: linear-gradient(180deg, #1a050b, #2a0a14);
+  width: 420px;
+  padding: 28px;
+  border-radius: 22px;
+  box-shadow:
+    0 0 60px rgba(255, 140, 170, 0.15),
+    inset 0 0 40px rgba(255, 200, 215, 0.05);
+  text-align: center;
+  animation: bloomIn 1s ease;
 }
 
-.container{
-  background:rgba(255,255,255,0.96);
-  width:90%;
-  max-width:420px;
-  padding:30px;
-  border-radius:22px;
-  text-align:center;
-  box-shadow:0 20px 45px rgba(0,0,0,0.2);
-  animation:fadeIn 1s ease;
+@keyframes bloomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-h2{
-  min-height:90px;
+h2 {
+  font-family: Playfair Display, serif;
+  font-weight: 500;
+  color: #f3c6d3;
+  line-height: 1.4;
 }
 
-.option{
-  background:#ff6f91;
-  color:#fff;
-  padding:13px;
-  margin:10px 0;
-  border-radius:30px;
-  cursor:pointer;
-  transition:.3s;
+.option {
+  background: linear-gradient(135deg, #3b0d1a, #4a1021);
+  padding: 14px;
+  margin: 12px 0;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.35s ease;
+  box-shadow: inset 0 0 0 rgba(255,255,255,0);
 }
 
-.option:hover{
-  transform:scale(1.05);
-  background:#ff4d73;
+.option:hover {
+  transform: scale(1.03);
+  box-shadow:
+    0 0 20px rgba(255, 170, 190, 0.25),
+    inset 0 0 10px rgba(255, 200, 215, 0.08);
 }
 
-@keyframes fadeIn{
-  from{opacity:0;transform:scale(.9);}
-  to{opacity:1;transform:scale(1);}
+.popup {
+  margin-top: 18px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #f1cfd9;
+  display: none;
+  animation: fadeUp 0.6s ease;
 }
 
-.sparkle{
-  position:absolute;
-  width:8px;
-  height:8px;
-  background:gold;
-  border-radius:50%;
-  pointer-events:none;
-  animation:spark .6s linear forwards;
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-@keyframes spark{
-  from{opacity:1;}
-  to{opacity:0;transform:translateY(-25px);}
+button {
+  margin-top: 22px;
+  padding: 11px 26px;
+  border: none;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #c84b7a, #9b355d);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 20px rgba(200, 75, 122, 0.4);
+  transition: all 0.3s ease;
 }
 
-.result{
-  font-size:42px;
-  color:#ff2f6e;
-  animation:pulse 1.5s infinite;
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 30px rgba(255, 120, 165, 0.6);
 }
 
-@keyframes pulse{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.1);}
-  100%{transform:scale(1);}
-}
-
-.hearts{
-  position:absolute;
-  bottom:0;
-  font-size:22px;
-  animation:floatUp 4s linear infinite;
-}
-
-@keyframes floatUp{
-  from{transform:translateY(0);opacity:1;}
-  to{transform:translateY(-100vh);opacity:0;}
+#final {
+  font-family: Playfair Display, serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #f4c2d3;
+  margin-top: 10px;
 }
 </style>
 </head>
 
 <body>
-
-<div class="container" id="box">
+<div class="container">
   <h2 id="question"></h2>
   <div id="options"></div>
+  <div class="popup" id="popup"></div>
+  <button id="nextBtn"></button>
 </div>
 
 <script>
-let index = 0;
-let correctCount = 0;
+const introText =
+"This is not a test, just a small journey into what you want and what feels good to you.";
 
-const test = [
-  {
-    q:"When you see my name pop up, you usually feel…",
-    correct:3,
-    o:[
-      "A little spark 😌",
-      "Curious and smiling 😊",
-      "Calm but interested 💭",
-      "He’s becoming a habit 💖"
-    ]
-  },
-  {
-    q:"Our ideal time together would be…",
-    correct:3,
-    o:[
-      "Laughing until time disappears 😄",
-      "Flirty chaos 😏",
-      "Quiet moments 🌙",
-      "All of the above, obviously 😌"
-    ]
-  },
-  {
-    q:"If I asked you out properly, you would…",
-    correct:3,
-    o:[
-      "Think about it 🤔",
-      "Ask questions 😄",
-      "Smile quietly 😊",
-      "Say yes… and pretend it’s casual 😏"
-    ]
-  },
-  {
-    q:"Right now, you’re most drawn to…",
-    correct:2,
-    o:[
-      "Something fun ✨",
-      "Just seeing what happens 😌",
-      "A real emotional connection ❤️",
-      "No expectations 🌸"
-    ]
-  },
-  {
-    q:"In a relationship, what matters the MOST?",
-    correct:3,
-    o:[
-      "Chemistry 😘",
-      "Attraction 🔥",
-      "Time together ⏳",
-      "Choosing each other every day 🤍"
-    ]
-  },
-  {
-    q:"If this turned into something real, you’d want it to be…",
-    correct:0,
-    o:[
-      "Intentional and long-term 💍",
-      "Casual but nice 🙂",
-      "Exciting for now 🔥",
-      "Let’s not think ahead 😌"
-    ]
-  }
+const questions = [
+{
+q: "Your ideal way to spend time with me would be",
+options: [
+"Spending time talking deeply and sharing thoughts that slowly build comfort and emotional closeness",
+"Choosing spontaneous plans with shared excitement and energy",
+"Enjoying quiet moments together without needing constant conversation",
+"Wanting to spend time with me no matter what we are doing because the presence matters"
+],
+popup: [
+"You are drawn to emotional closeness and meaningful conversation",
+"You enjoy shared excitement and natural spontaneity",
+"You feel comforted by calm presence and quiet connection",
+"You value intention and presence above everything else"
+]
+},
+{
+q: "When you start liking me you usually",
+options: [
+"Express it through playful teasing and light moments",
+"Try to know me deeply by asking questions and paying attention",
+"Take your time while feeling emotions quietly",
+"Act calm on the outside while feeling everything inside"
+],
+popup: [
+"You show interest through ease and warmth",
+"You express care through understanding and curiosity",
+"You respect emotions enough to let them grow naturally",
+"You feel deeply but choose gentle expression"
+]
+},
+{
+q: "Your perfect date with me would include",
+options: [
+"Lighthearted laughter and easy flirting",
+"Deep conversations and comfortable silence",
+"Sharing an experience that becomes a memory",
+"A balance of fun emotion depth and closeness"
+],
+popup: [
+"You enjoy joy and playful connection",
+"You value emotional intimacy and presence",
+"You love creating shared memories",
+"You want a full emotional experience"
+]
+},
+{
+q: "What makes you feel closest to me",
+options: [
+"Gentle closeness and quiet comfort",
+"Feeling understood without explaining",
+"Laughing at things only we understand",
+"Seeing consistent effort over time"
+],
+popup: [
+"Comfort makes you feel safe",
+"Understanding makes you feel seen",
+"Shared joy makes you feel bonded",
+"Consistency makes you feel secure"
+]
+},
+{
+q: "When I flirt with you you prefer",
+options: [
+"Clear confident expressions",
+"Playful teasing",
+"Subtle charm",
+"Sincere focused attention"
+],
+popup: [
+"Clarity makes you feel safe",
+"Playfulness keeps things light",
+"Subtle attraction keeps you intrigued",
+"Sincerity makes you feel valued"
+]
+},
+{
+q: "In a relationship with me you secretly want me to",
+options: [
+"Make you feel emotionally safe without judgment",
+"Choose you even on difficult days",
+"Communicate openly and honestly",
+"Offer effort balance and sincerity"
+],
+popup: [
+"Emotional safety matters deeply to you",
+"Loyalty matters deeply to you",
+"Honest communication matters deeply to you",
+"Balanced effort matters deeply to you"
+]
+}
 ];
 
-const qEl=document.getElementById("question");
-const optEl=document.getElementById("options");
+let current = -1;
+const selections = [];
 
-function typeText(text,i=0){
-  if(i<text.length){
-    qEl.innerHTML+=text.charAt(i);
-    setTimeout(()=>typeText(text,i+1),35);
-  }
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const popupEl = document.getElementById("popup");
+const nextBtn = document.getElementById("nextBtn");
+
+function showIntro() {
+  questionEl.innerText = introText;
+  optionsEl.innerHTML = "";
+  popupEl.style.display = "none";
+  nextBtn.innerText = "Begin";
+  nextBtn.style.display = "inline-block";
 }
 
-function load(){
-  qEl.innerHTML="";
-  optEl.innerHTML="";
-  typeText(test[index].q);
+nextBtn.onclick = () => {
+  if (current === -1) {
+    current = 0;
+    loadQuestion();
+  } else {
+    current++;
+    if (current < questions.length) {
+      loadQuestion();
+    } else {
+      showFinal();
+    }
+  }
+};
 
-  test[index].o.forEach((opt,i)=>{
-    const d=document.createElement("div");
-    d.className="option";
-    d.innerText=opt;
-    d.onclick=e=>{
-      sparkle(e.clientX,e.clientY);
-      if(i===test[index].correct) correctCount++;
-      index++;
-      index<test.length ? setTimeout(load,400) : result();
-    };
-    optEl.appendChild(d);
+function loadQuestion() {
+  popupEl.style.display = "none";
+  nextBtn.style.display = "none";
+  optionsEl.innerHTML = "";
+  questionEl.innerText = questions[current].q;
+
+  questions[current].options.forEach((opt, i) => {
+    const div = document.createElement("div");
+    div.className = "option";
+    div.innerText = opt;
+    div.onclick = () => selectOption(i);
+    optionsEl.appendChild(div);
   });
 }
 
-function sparkle(x,y){
-  for(let i=0;i<8;i++){
-    const s=document.createElement("div");
-    s.className="sparkle";
-    s.style.left=x+Math.random()*20+"px";
-    s.style.top=y+Math.random()*20+"px";
-    document.body.appendChild(s);
-    setTimeout(()=>s.remove(),600);
-  }
+function selectOption(index) {
+  selections[current] = index;
+  popupEl.innerText = questions[current].popup[index];
+  popupEl.style.display = "block";
+  nextBtn.innerText = "Next";
+  nextBtn.style.display = "inline-block";
 }
 
-function result(){
-  const percent=Math.round((correctCount/test.length)*100);
-  let message="";
-  let confession="";
+function showFinal() {
+  questionEl.innerText = "Thank You For Sharing";
+  optionsEl.innerHTML = "";
+  popupEl.style.display = "none";
+  nextBtn.style.display = "none";
 
-  if(percent>=80){
-    message="This feels rare… we think the same 💕";
-    confession="I ❤️ YOU";
-  }else if(percent>=50){
-    message="There’s definitely something here ✨";
-    confession="I really like you 💖";
-  }else{
-    message="Something sweet could grow 🌱";
-    confession="I’m glad this is you 😊";
-  }
+  const message =
+    "Every choice you made quietly tells me something meaningful about you. This was never about answers, only about listening, care, and intention.";
 
-  document.getElementById("box").innerHTML=`
-    <div class="result">${percent}%</div>
-    <p style="margin-top:10px;">Compatibility Match</p>
-    <p style="margin-top:15px;">${message}</p>
-    <h3 style="margin-top:20px;">${confession}</h3>
-    <p>Whatever this becomes… I’m glad it’s with you</p>
-  `;
-
-  for(let i=0;i<18;i++){
-    const h=document.createElement("div");
-    h.className="hearts";
-    h.innerText="💖";
-    h.style.left=Math.random()*100+"vw";
-    document.body.appendChild(h);
-  }
+  typeText(message);
 }
 
-load();
+function typeText(text) {
+  let i = 0;
+  const finalDiv = document.createElement("div");
+  finalDiv.id = "final";
+  optionsEl.appendChild(finalDiv);
+
+  const interval = setInterval(() => {
+    finalDiv.innerText += text.charAt(i);
+    i++;
+    if (i === text.length) clearInterval(interval);
+  }, 45);
+}
+
+showIntro();
 </script>
-
 </body>
 </html>
