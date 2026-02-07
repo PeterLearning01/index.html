@@ -37,8 +37,10 @@ h2 {
   font-weight: 500;
   color: #f3c6d3;
   line-height: 1.5;
+  margin-bottom: 18px;
 }
 
+/* OPTIONS */
 .option {
   margin-top: 14px;
   padding: 14px;
@@ -53,17 +55,32 @@ h2 {
   box-shadow: 0 0 20px rgba(255,170,190,0.25);
 }
 
-.statement {
-  margin-top: 22px;
-  font-family: Playfair Display, serif;
-  font-size: 15px;
-  line-height: 1.7;
-  color: #f4c2d3;
-  min-height: 120px;
+/* STATEMENT BOX */
+.statement-box {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255, 180, 200, 0.05);
+  box-shadow: inset 0 0 20px rgba(255, 150, 180, 0.08);
 }
 
+/* STATEMENT TEXT */
+.statement {
+  font-family: Playfair Display, serif;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #f4c2d3;
+
+  max-width: 100%;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  letter-spacing: 0.2px;
+}
+
+/* BUTTON */
 button {
-  margin-top: 28px;
+  margin-top: 26px;
   padding: 12px 30px;
   border-radius: 28px;
   border: none;
@@ -84,11 +101,22 @@ button:hover {
 <div class="container">
   <h2 id="question"></h2>
   <div id="options"></div>
-  <div class="statement" id="statement"></div>
+
+  <div class="statement-box" id="statementBox" style="display:none;">
+    <div class="statement" id="statement"></div>
+  </div>
+
   <button id="nextBtn">Next</button>
 </div>
 
 <script>
+/* INTRO SLIDE */
+const intro = {
+  q: "Do you want to answer a few thoughts that quietly tell me what you want and what feels right to you",
+  isIntro: true
+};
+
+/* QUESTIONS */
 const questions = [
 {
   q: "Your ideal way of spending time with me feels like",
@@ -99,15 +127,15 @@ const questions = [
     },
     {
       text: "Spontaneous plans",
-      statement: "You are drawn to shared excitement and energy, loving moments that feel alive, unplanned, and full of shared laughter and curiosity."
+      statement: "You are drawn to shared excitement and energy, loving moments that feel alive, unplanned, and full of shared curiosity and laughter."
     },
     {
       text: "Quiet presence",
-      statement: "You feel closest in silence, where comfort exists without words and just being together feels enough."
+      statement: "You feel closest in silence, where comfort exists without words and simply being together feels complete."
     },
     {
       text: "Just being with me",
-      statement: "For you, the activity does not matter at all. What matters is the feeling of choosing each other and enjoying presence over everything else."
+      statement: "For you, what matters most is presence. The activity fades away, and the feeling of choosing each other becomes everything."
     }
   ]
 },
@@ -115,39 +143,65 @@ const questions = [
   q: "When you start feeling something for me",
   options: [
     {
-      text: "You tease playfully",
-      statement: "You express interest through warmth and light teasing, enjoying the slow build of attraction without pressure."
+      text: "Playful teasing",
+      statement: "You show interest through warmth and playful energy, letting attraction grow naturally without pressure or expectations."
     },
     {
-      text: "You try to understand me",
-      statement: "You pay attention deeply, noticing details, asking questions, and letting emotional connection grow naturally."
+      text: "Understanding deeply",
+      statement: "You pay attention to details, listen closely, and let emotional connection build through genuine understanding."
     },
     {
-      text: "You take your time",
-      statement: "You prefer to feel things quietly, letting emotions settle before expressing them."
+      text: "Taking your time",
+      statement: "You prefer to feel things quietly, allowing emotions to settle before expressing them."
     },
     {
-      text: "You feel deeply but stay calm",
-      statement: "Even when emotions are intense inside, you choose calmness and maturity in how you show them."
+      text: "Feeling deeply but calmly",
+      statement: "Even when emotions are strong inside, you choose maturity, calmness, and intention in how you express them."
     }
   ]
 }
 ];
 
-let current = 0;
+let index = -1;
+let typingInterval;
+
 const questionEl = document.getElementById("question");
 const optionsEl = document.getElementById("options");
 const statementEl = document.getElementById("statement");
+const statementBox = document.getElementById("statementBox");
 const nextBtn = document.getElementById("nextBtn");
-let typingInterval;
+
+/* LOAD INTRO */
+function loadIntro() {
+  questionEl.innerText = intro.q;
+  optionsEl.innerHTML = "";
+  statementBox.style.display = "none";
+  nextBtn.style.display = "inline-block";
+}
+
+nextBtn.onclick = () => {
+  if (index === -1) {
+    index = 0;
+    loadQuestion();
+  } else {
+    index++;
+    if (index < questions.length) {
+      loadQuestion();
+    } else {
+      showEnd();
+    }
+  }
+};
 
 function loadQuestion() {
-  questionEl.innerText = questions[current].q;
+  const q = questions[index];
+  questionEl.innerText = q.q;
   optionsEl.innerHTML = "";
   statementEl.innerText = "";
+  statementBox.style.display = "none";
   nextBtn.style.display = "none";
 
-  questions[current].options.forEach(opt => {
+  q.options.forEach(opt => {
     const div = document.createElement("div");
     div.className = "option";
     div.innerText = opt.text;
@@ -165,8 +219,9 @@ function selectOption(statement, selectedDiv) {
 function typeStatement(text) {
   clearInterval(typingInterval);
   statementEl.innerText = "";
-  let i = 0;
+  statementBox.style.display = "block";
 
+  let i = 0;
   typingInterval = setInterval(() => {
     statementEl.innerText += text.charAt(i);
     i++;
@@ -177,20 +232,16 @@ function typeStatement(text) {
   }, 40);
 }
 
-nextBtn.onclick = () => {
-  current++;
-  if (current < questions.length) {
-    loadQuestion();
-  } else {
-    questionEl.innerText = "Thank you for sharing this with me";
-    optionsEl.innerHTML = "";
-    statementEl.innerText =
-      "Every choice you made tells me something meaningful, even the things you did not say out loud.";
-    nextBtn.style.display = "none";
-  }
-};
+function showEnd() {
+  questionEl.innerText = "Thank you for sharing this with me";
+  optionsEl.innerHTML = "";
+  statementBox.style.display = "block";
+  statementEl.innerText =
+    "Every choice you made told me something meaningful. Some things are felt more deeply when they are simply understood, not explained.";
+  nextBtn.style.display = "none";
+}
 
-loadQuestion();
+loadIntro();
 </script>
 </body>
 </html>
