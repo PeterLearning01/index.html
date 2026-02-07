@@ -16,6 +16,7 @@ body {
   height: 100vh;
   margin: 0;
   color: #f6e6eb;
+  overflow: hidden;
 }
 
 .container {
@@ -28,17 +29,12 @@ body {
     inset 0 0 40px rgba(255, 200, 215, 0.05);
   text-align: center;
   animation: bloomIn 1s ease;
+  position: relative;
 }
 
 @keyframes bloomIn {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 h2 {
@@ -55,35 +51,46 @@ h2 {
   border-radius: 16px;
   cursor: pointer;
   font-size: 14px;
-  transition: all 0.35s ease;
-  box-shadow: inset 0 0 0 rgba(255,255,255,0);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .option:hover {
   transform: scale(1.03);
-  box-shadow:
-    0 0 20px rgba(255, 170, 190, 0.25),
-    inset 0 0 10px rgba(255, 200, 215, 0.08);
+  box-shadow: 0 0 25px rgba(255, 170, 190, 0.25);
+}
+
+.option::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,200,220,0.6), transparent 70%);
+  opacity: 0;
+  transform: scale(0.2);
+}
+
+.option.blast::after {
+  animation: blast 0.6s ease-out forwards;
+}
+
+@keyframes blast {
+  0% { opacity: 0.8; transform: scale(0.2); }
+  100% { opacity: 0; transform: scale(2.2); }
 }
 
 .popup {
   margin-top: 18px;
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 1.6;
   color: #f1cfd9;
   display: none;
-  animation: fadeUp 0.6s ease;
+  animation: reveal 0.8s ease forwards;
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 button {
@@ -98,6 +105,7 @@ button {
   letter-spacing: 0.5px;
   box-shadow: 0 0 20px rgba(200, 75, 122, 0.4);
   transition: all 0.3s ease;
+  display: none;
 }
 
 button:hover {
@@ -120,7 +128,7 @@ button:hover {
   <h2 id="question"></h2>
   <div id="options"></div>
   <div class="popup" id="popup"></div>
-  <button id="nextBtn"></button>
+  <button id="nextBtn">Next</button>
 </div>
 
 <script>
@@ -260,17 +268,22 @@ function loadQuestion() {
     const div = document.createElement("div");
     div.className = "option";
     div.innerText = opt;
-    div.onclick = () => selectOption(i);
+    div.onclick = () => selectOption(div, i);
     optionsEl.appendChild(div);
   });
 }
 
-function selectOption(index) {
+function selectOption(element, index) {
+  if (selections[current] !== undefined) return;
   selections[current] = index;
-  popupEl.innerText = questions[current].popup[index];
-  popupEl.style.display = "block";
-  nextBtn.innerText = "Next";
-  nextBtn.style.display = "inline-block";
+
+  element.classList.add("blast");
+
+  setTimeout(() => {
+    popupEl.innerText = questions[current].popup[index];
+    popupEl.style.display = "block";
+    nextBtn.style.display = "inline-block";
+  }, 350);
 }
 
 function showFinal() {
@@ -280,7 +293,7 @@ function showFinal() {
   nextBtn.style.display = "none";
 
   const message =
-    "Every choice you made quietly tells me something meaningful about you. This was never about answers, only about listening, care, and intention.";
+    "Every choice you made stayed just between us. I now understand you a little better, and that means more than you think.";
 
   typeText(message);
 }
