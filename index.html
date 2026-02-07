@@ -62,20 +62,24 @@ h2 {
   border-radius: 16px;
   background: rgba(255, 180, 200, 0.05);
   box-shadow: inset 0 0 20px rgba(255, 150, 180, 0.08);
+  display: none;
 }
 
-/* STATEMENT TEXT */
+/* STATEMENT TEXT — FIXED */
 .statement {
   font-family: Playfair Display, serif;
   font-size: 15px;
-  line-height: 1.8;
+  line-height: 1.9;
   color: #f4c2d3;
 
-  max-width: 100%;
-  white-space: normal;
-  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: normal;
   overflow-wrap: break-word;
-  letter-spacing: 0.2px;
+
+  letter-spacing: 0.3px;
+  word-spacing: 2px;
+
+  max-width: 100%;
 }
 
 /* BUTTON */
@@ -102,7 +106,7 @@ button:hover {
   <h2 id="question"></h2>
   <div id="options"></div>
 
-  <div class="statement-box" id="statementBox" style="display:none;">
+  <div class="statement-box" id="statementBox">
     <div class="statement" id="statement"></div>
   </div>
 
@@ -112,8 +116,7 @@ button:hover {
 <script>
 /* INTRO SLIDE */
 const intro = {
-  q: "Do you want to answer a few thoughts that quietly tell me what you want and what feels right to you",
-  isIntro: true
+  q: "Do you want to answer a few thoughts that quietly tell me what you want and what feels right to you"
 };
 
 /* QUESTIONS */
@@ -135,7 +138,7 @@ const questions = [
     },
     {
       text: "Just being with me",
-      statement: "For you, what matters most is presence. The activity fades away, and the feeling of choosing each other becomes everything."
+      statement: "For you, the activity fades away completely, and what truly matters is the feeling of choosing each other and enjoying presence above everything else."
     }
   ]
 },
@@ -144,11 +147,11 @@ const questions = [
   options: [
     {
       text: "Playful teasing",
-      statement: "You show interest through warmth and playful energy, letting attraction grow naturally without pressure or expectations."
+      statement: "You express interest through warmth and playful energy, letting attraction grow naturally without pressure or expectations."
     },
     {
       text: "Understanding deeply",
-      statement: "You pay attention to details, listen closely, and let emotional connection build through genuine understanding."
+      statement: "You listen closely, notice the little details, and let emotional connection build through genuine understanding."
     },
     {
       text: "Taking your time",
@@ -197,7 +200,7 @@ function loadQuestion() {
   const q = questions[index];
   questionEl.innerText = q.q;
   optionsEl.innerHTML = "";
-  statementEl.innerText = "";
+  statementEl.textContent = "";
   statementBox.style.display = "none";
   nextBtn.style.display = "none";
 
@@ -216,16 +219,18 @@ function selectOption(statement, selectedDiv) {
   typeStatement(statement);
 }
 
+/* TYPING WITH SPACE PRESERVATION */
 function typeStatement(text) {
   clearInterval(typingInterval);
-  statementEl.innerText = "";
+  statementEl.textContent = "";
   statementBox.style.display = "block";
+  nextBtn.style.display = "none";
 
   let i = 0;
   typingInterval = setInterval(() => {
-    statementEl.innerText += text.charAt(i);
+    statementEl.textContent += text[i];
     i++;
-    if (i === text.length) {
+    if (i >= text.length) {
       clearInterval(typingInterval);
       nextBtn.style.display = "inline-block";
     }
@@ -236,8 +241,8 @@ function showEnd() {
   questionEl.innerText = "Thank you for sharing this with me";
   optionsEl.innerHTML = "";
   statementBox.style.display = "block";
-  statementEl.innerText =
-    "Every choice you made told me something meaningful. Some things are felt more deeply when they are simply understood, not explained.";
+  statementEl.textContent =
+    "Every choice you made told me something meaningful. Some feelings are better understood quietly, without needing to explain them.";
   nextBtn.style.display = "none";
 }
 
