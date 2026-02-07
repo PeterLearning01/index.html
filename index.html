@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Our Compatibility Test 💕</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  margin:0;
+  height:100vh;
+  background:linear-gradient(135deg,#ffdde1,#ee9ca7);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+.container{
+  background:rgba(255,255,255,0.96);
+  width:90%;
+  max-width:420px;
+  padding:30px;
+  border-radius:22px;
+  text-align:center;
+  box-shadow:0 20px 45px rgba(0,0,0,0.2);
+  animation:fadeIn 1s ease;
+}
+
+h2{
+  min-height:90px;
+}
+
+.option{
+  background:#ff6f91;
+  color:#fff;
+  padding:13px;
+  margin:10px 0;
+  border-radius:30px;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.option:hover{
+  transform:scale(1.05);
+  background:#ff4d73;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:scale(.9);}
+  to{opacity:1;transform:scale(1);}
+}
+
+.sparkle{
+  position:absolute;
+  width:8px;
+  height:8px;
+  background:gold;
+  border-radius:50%;
+  pointer-events:none;
+  animation:spark .6s linear forwards;
+}
+
+@keyframes spark{
+  from{opacity:1;}
+  to{opacity:0;transform:translateY(-25px);}
+}
+
+.result{
+  font-size:42px;
+  color:#ff2f6e;
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+  100%{transform:scale(1);}
+}
+
+.hearts{
+  position:absolute;
+  bottom:0;
+  font-size:22px;
+  animation:floatUp 4s linear infinite;
+}
+
+@keyframes floatUp{
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-100vh);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="box">
+  <h2 id="question"></h2>
+  <div id="options"></div>
+</div>
+
+<script>
+let index = 0;
+let correctCount = 0;
+
+const test = [
+  {
+    q:"When you see my name pop up, you usually feel…",
+    correct:3,
+    o:[
+      "A little spark 😌",
+      "Curious and smiling 😊",
+      "Calm but interested 💭",
+      "He’s becoming a habit 💖"
+    ]
+  },
+  {
+    q:"Our ideal time together would be…",
+    correct:3,
+    o:[
+      "Laughing until time disappears 😄",
+      "Flirty chaos 😏",
+      "Quiet moments 🌙",
+      "All of the above, obviously 😌"
+    ]
+  },
+  {
+    q:"If I asked you out properly, you would…",
+    correct:3,
+    o:[
+      "Think about it 🤔",
+      "Ask questions 😄",
+      "Smile quietly 😊",
+      "Say yes… and pretend it’s casual 😏"
+    ]
+  },
+  {
+    q:"Right now, you’re most drawn to…",
+    correct:2,
+    o:[
+      "Something fun ✨",
+      "Just seeing what happens 😌",
+      "A real emotional connection ❤️",
+      "No expectations 🌸"
+    ]
+  },
+  {
+    q:"In a relationship, what matters the MOST?",
+    correct:3,
+    o:[
+      "Chemistry 😘",
+      "Attraction 🔥",
+      "Time together ⏳",
+      "Choosing each other every day 🤍"
+    ]
+  },
+  {
+    q:"If this turned into something real, you’d want it to be…",
+    correct:0,
+    o:[
+      "Intentional and long-term 💍",
+      "Casual but nice 🙂",
+      "Exciting for now 🔥",
+      "Let’s not think ahead 😌"
+    ]
+  }
+];
+
+const qEl=document.getElementById("question");
+const optEl=document.getElementById("options");
+
+function typeText(text,i=0){
+  if(i<text.length){
+    qEl.innerHTML+=text.charAt(i);
+    setTimeout(()=>typeText(text,i+1),35);
+  }
+}
+
+function load(){
+  qEl.innerHTML="";
+  optEl.innerHTML="";
+  typeText(test[index].q);
+
+  test[index].o.forEach((opt,i)=>{
+    const d=document.createElement("div");
+    d.className="option";
+    d.innerText=opt;
+    d.onclick=e=>{
+      sparkle(e.clientX,e.clientY);
+      if(i===test[index].correct) correctCount++;
+      index++;
+      index<test.length ? setTimeout(load,400) : result();
+    };
+    optEl.appendChild(d);
+  });
+}
+
+function sparkle(x,y){
+  for(let i=0;i<8;i++){
+    const s=document.createElement("div");
+    s.className="sparkle";
+    s.style.left=x+Math.random()*20+"px";
+    s.style.top=y+Math.random()*20+"px";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),600);
+  }
+}
+
+function result(){
+  const percent=Math.round((correctCount/test.length)*100);
+  let message="";
+  let confession="";
+
+  if(percent>=80){
+    message="This feels rare… we think the same 💕";
+    confession="I ❤️ YOU";
+  }else if(percent>=50){
+    message="There’s definitely something here ✨";
+    confession="I really like you 💖";
+  }else{
+    message="Something sweet could grow 🌱";
+    confession="I’m glad this is you 😊";
+  }
+
+  document.getElementById("box").innerHTML=`
+    <div class="result">${percent}%</div>
+    <p style="margin-top:10px;">Compatibility Match</p>
+    <p style="margin-top:15px;">${message}</p>
+    <h3 style="margin-top:20px;">${confession}</h3>
+    <p>Whatever this becomes… I’m glad it’s with you</p>
+  `;
+
+  for(let i=0;i<18;i++){
+    const h=document.createElement("div");
+    h.className="hearts";
+    h.innerText="💖";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+  }
+}
+
+load();
+</script>
+
+</body>
+</html>
