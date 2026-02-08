@@ -4,10 +4,15 @@
 <meta charset="UTF-8">
 <title>For Krishna ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
 body{
   font-family:'Poppins', sans-serif;
   background:#000;
@@ -15,7 +20,7 @@ body{
   overflow-x:hidden;
 }
 
-/* Hero */
+/* HERO */
 .hero{
   min-height:100vh;
   display:flex;
@@ -27,18 +32,20 @@ body{
     url("https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1920&q=80")
     center/cover no-repeat;
 }
+
 .hero h1{
   font-family:'Great Vibes', cursive;
   font-size:72px;
   color:#ffd6e8;
 }
+
 .hero p{
   margin-top:20px;
   font-size:20px;
   opacity:0.9;
 }
 
-/* Sections */
+/* SECTIONS */
 .section{
   min-height:100vh;
   display:flex;
@@ -48,6 +55,7 @@ body{
   padding:60px 20px;
   text-align:center;
 }
+
 .section img{
   max-width:90%;
   max-height:75vh;
@@ -57,10 +65,12 @@ body{
   transform:translateY(40px);
   transition:1s ease;
 }
+
 .section.show img{
   opacity:1;
   transform:translateY(0);
 }
+
 .caption{
   margin-top:25px;
   font-size:22px;
@@ -69,9 +79,12 @@ body{
   opacity:0;
   transition:1s ease;
 }
-.section.show .caption{opacity:1;}
 
-/* Final */
+.section.show .caption{
+  opacity:1;
+}
+
+/* FINAL PROPOSAL */
 .final{
   min-height:100vh;
   display:flex;
@@ -82,33 +95,73 @@ body{
   background:linear-gradient(180deg,#000,#1a0010);
   padding:60px 20px;
 }
+
 .final h2{
-  font-family:'Great Vibes', cursive;
-  font-size:64px;
-  color:#ff9ecb;
+  font-family:'Poppins', sans-serif;
+  font-size:42px;
+  font-weight:500;
+  letter-spacing:1px;
+  color:#ffd6e8;
 }
-.final p{
-  font-size:22px;
-  margin-top:25px;
-  line-height:1.9;
-}
-button{
+
+.proposal-buttons{
+  display:flex;
+  gap:30px;
   margin-top:40px;
-  padding:16px 50px;
-  border:none;
-  border-radius:50px;
-  background:linear-gradient(45deg,#ff5fa2,#ff9ecb);
-  color:white;
+}
+
+.yes-btn,.no-btn{
+  padding:14px 40px;
   font-size:18px;
+  border-radius:40px;
+  border:none;
   cursor:pointer;
-  box-shadow:0 0 30px #ff9ecb;
+  transition:0.3s ease;
+}
+
+.yes-btn{
+  background:#ff5fa2;
+  color:white;
+  box-shadow:0 0 20px #ff9ecb;
+}
+
+.no-btn{
+  background:#444;
+  color:white;
+  position:relative;
+}
+
+.ring{
+  font-size:80px;
+  margin-top:30px;
+  animation:ringPop 1.5s ease forwards;
+}
+
+@keyframes ringPop{
+  0%{transform:scale(0);opacity:0;}
+  60%{transform:scale(1.3);}
+  100%{transform:scale(1);opacity:1;}
+}
+
+.yes-message{
+  max-width:900px;
+  margin-top:30px;
+  font-size:22px;
+  line-height:1.8;
+  opacity:0;
+  animation:fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
 }
 </style>
 </head>
 
 <body>
 
-<!-- MUSIC -->
+<!-- 🎵 MUSIC -->
 <audio id="bgMusic" autoplay loop playsinline>
   <source src="Pyar.mp3" type="audio/mpeg">
 </audio>
@@ -125,15 +178,7 @@ button{
 <section class="section">
   <img src="IMG_5531.jpeg">
   <div class="caption">
-    Hey Krishnaba Gohil the coolest woman I ever met in my life  
-    The baddie the sweetest the kindest the loveable the charming the adorable  
-    You and those Pavagadh mountains are such a bliss in my life  
-    You complete my life and I need you for my life  
-    I sincerely apologize for the hurt that I have caused  
-    Bharosha rakh mujh par tujhe kabhi hurt nahi karunga ab  
-    I will make you the queen of my entire life  
-    You are an inspiration for me  
-    Chalo ab scroll down karo 😉
+    With you and the mountains, I see strength, calm, and a fearless heart.
   </div>
 </section>
 
@@ -141,112 +186,96 @@ button{
 <section class="section">
   <img src="IMG_5623.jpeg">
   <div class="caption">
-    I remember when we visited this sunset spot  
-    and saw couples getting the photoshoot done  
-    I imagined us being there one day  
-    My happiness resides in you  
-    Every sunset every sunrise tere saath dekhna hai  
-
-    Samundar kabhi nadi se aankh nahi ladta  
-    meri himmat to dekho main ek boond hoon  
-    aur samundar ke sehlab se aankh lada baitha hoon  
-    ek boond hi sahi  
-    tere liye sehlab ban jaunga  
-    bas tujhe apna aur khud ko tera  
-    bana kar hi mar jaunga
+    Walking beside you, even silence feels meaningful.  
+    My heart follows you without question.
   </div>
 </section>
 
-<!-- IMAGE 3 (HEALING) -->
-<section class="section">
-  <img src="IMG_5614.jpeg">
-  <div class="caption">
-    If you would ask me what is that one thing  
-    I would be desperate to heal in you  
-    it would be the wounds that have been there since life  
-    I know you are strong  
-    and the situations you have been through  
-    have made you the strongest  
-    but I also know there is that little girl  
-    who wants to be loved and cared for  
-    I know I have not been the one yet  
-    but I have started  
-    I will heal you in every way possible  
-    and you will be healthy again  
-    happy again  
-    and without tears for life
-  </div>
-</section>
-
-<!-- IMAGE 4 (WEDDING) -->
+<!-- IMAGE 3 -->
 <section class="section">
   <img src="d55efb48-5dde-4271-8e6c-5561df421207.jpeg">
   <div class="caption">
-    I remember Misha's Wedding the day I saw you in saree in person  
-    and you were looking so damn gorgeous  
-    I have always been so proud to have you  
-    serve you protect you take care of your small things  
-    I remember when you came in the parking  
-    and hugged me with tears in your eyes  
-    I miss the version where you cared for me  
-    where I was heard  
-    and yes it is all my fault losing it all in just a moment  
-    I am sorry Krishna  
-    but I promise I am never leaving your side  
-    and make a relationship that everyone craves for
+    In your eyes, I found comfort, trust, and a love that feels like home.
   </div>
 </section>
 
-<!-- IMAGE 5 (EYES) -->
+<!-- IMAGE 4 -->
 <section class="section">
   <img src="IMG_5769.jpeg">
   <div class="caption">
-    You and your those beautiful eyes  
-    The way we look at each other when we are in person  
-    it is not forced it feels so natural  
-    I cannot stop looking at you admiring you  
-    and telling you how much I love you  
-    That talk with that camping guy  
-    making you smile and getting to know new things  
-    feels so good and feels like an achievement to me  
-    I apologise for the times I made you cry  
-    I will make up for every hurt I caused you
+    Your strength inspires me, your smile gives me peace.
+  </div>
+</section>
+
+<!-- IMAGE 5 -->
+<section class="section">
+  <img src="IMG_5614.jpeg">
+  <div class="caption">
+    Grace, beauty, and warmth — everything I ever prayed for in one soul.
   </div>
 </section>
 
 <!-- FINAL PROPOSAL -->
 <section class="final">
-  <h2>HAPPY PROPOSE DAY KRISHNA GOHIL 💍</h2>
-  <p>
-    I know you are hurt and I know how you want to be loved  
-    I know what to do and what not to do  
+  <h2>Happy Propose Day Krishna Gohil</h2>
 
-    This is a proposal I want you to hear  
-    So Krishna Gohil will you be mine forever happily ever after  
+  <div class="proposal-buttons">
+    <button class="yes-btn" onclick="sayYes()">Yes</button>
+    <button class="no-btn" id="noBtn" onclick="playfulNo()">No</button>
+  </div>
 
-    The fact that I love you so much  
-    and also that I have hurt you  
-    I need this chance to prove how much I am into you  
-    and how happy we can be together  
-
-    I do not want either of us to regret in the future  
-    I am assuring you  
-    I will keep you happy forever
-  </p>
-  <button onclick="alert('Forever begins here ❤️')">Yes Forever</button>
+  <div id="proposalResult"></div>
 </section>
 
 <script>
-document.body.addEventListener("click",()=>{
+/* Mobile autoplay fix */
+document.body.addEventListener("click", ()=>{
   document.getElementById("bgMusic").play();
 });
+
+/* Scroll reveal */
 const sections=document.querySelectorAll(".section");
 const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){e.target.classList.add("show");}
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
+    }
   });
 },{threshold:0.3});
-sections.forEach(s=>observer.observe(s));
+sections.forEach(section=>observer.observe(section));
+
+function playfulNo(){
+  const noBtn=document.getElementById("noBtn");
+  noBtn.style.position="absolute";
+  noBtn.style.top=Math.random()*300+"px";
+  noBtn.style.left=Math.random()*300+"px";
+  noBtn.innerText="Yes 😄";
+  noBtn.onclick=sayYes;
+}
+
+function sayYes(){
+  const result=document.getElementById("proposalResult");
+  result.innerHTML=`
+    <div class="ring">💍</div>
+    <div class="yes-message">
+      Thank you for choosing me even when I gave you reasons not to.  
+      I know I have hurt you and I am deeply sorry for every tear.  
+
+      I never want to be the reason for your pain again.  
+
+      I love you in a way that wants to protect you, heal you,  
+      and grow with you.  
+
+      I am grateful for your patience, your love,  
+      and your presence in my life.  
+
+      I choose you today, tomorrow,  
+      and every day after.  
+
+      I love you — always.
+    </div>
+  `;
+}
 </script>
 
 </body>
