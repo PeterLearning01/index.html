@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Chocolate Day ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:radial-gradient(circle,#3b1f1f,#120707);
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  overflow:hidden;
+}
+
+.container{
+  text-align:center;
+  max-width:900px;
+  padding:30px;
+}
+
+h1{
+  font-size:38px;
+  margin-bottom:10px;
+}
+
+.subtitle{
+  font-size:18px;
+  opacity:0.85;
+  margin-bottom:30px;
+}
+
+/* BOX */
+.box{
+  width:320px;
+  height:220px;
+  background:linear-gradient(145deg,#5a2d2d,#3a1c1c);
+  border-radius:20px;
+  margin:0 auto;
+  position:relative;
+  cursor:pointer;
+  box-shadow:0 25px 40px rgba(0,0,0,0.6);
+  transition:0.8s ease;
+}
+
+.box.open{
+  transform:rotateX(60deg) translateY(-40px);
+}
+
+.box::before{
+  content:"🍫";
+  position:absolute;
+  font-size:60px;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}
+
+/* CHOCOLATES */
+.chocolates{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  margin-top:40px;
+  opacity:0;
+  pointer-events:none;
+  transition:1s ease;
+}
+
+.chocolates.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.choco{
+  background:linear-gradient(145deg,#6b3b2a,#3d1e14);
+  border-radius:15px;
+  padding:20px;
+  cursor:pointer;
+  box-shadow:0 15px 25px rgba(0,0,0,0.6);
+  transition:0.3s ease;
+}
+
+.choco:hover{
+  transform:scale(1.05);
+}
+
+.choco.gold{
+  background:linear-gradient(145deg,#d4af37,#b38b2e);
+  color:#000;
+  font-weight:500;
+}
+
+/* MESSAGE */
+.message{
+  margin-top:40px;
+  font-size:20px;
+  line-height:1.8;
+  min-height:120px;
+  opacity:0;
+  transition:0.5s ease;
+}
+
+.message.show{
+  opacity:1;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Happy Chocolate Day 🍫❤️</h1>
+  <div class="subtitle">Tap the box… something sweet waits for you</div>
+
+  <div class="box" onclick="openBox()"></div>
+
+  <div class="chocolates" id="chocolates">
+    <div class="choco" onclick="showMsg(1)">Dark Chocolate</div>
+    <div class="choco" onclick="showMsg(2)">Milk Chocolate</div>
+    <div class="choco" onclick="showMsg(3)">White Chocolate</div>
+    <div class="choco" onclick="showMsg(4)">Hazelnut</div>
+    <div class="choco" onclick="showMsg(5)">Caramel</div>
+    <div class="choco gold" onclick="showMsg(6)">Golden One</div>
+  </div>
+
+  <div class="message" id="message"></div>
+</div>
+
+<script>
+function openBox(){
+  document.querySelector('.box').classList.add('open');
+  document.getElementById('chocolates').classList.add('show');
+}
+
+function showMsg(n){
+  const msg=document.getElementById('message');
+  msg.classList.add('show');
+
+  const messages={
+    1:"Like dark chocolate, your love is deep, intense, and addictive.",
+    2:"You are my comfort, my sweetness, the reason everything feels better.",
+    3:"Rare and pure, you are one of a kind in my life.",
+    4:"You add warmth, laughter, and surprise to my days.",
+    5:"Soft, sweet, and impossible to resist — just like you.",
+    6:"This one isn’t chocolate. It’s my heart. And it’s already yours. ❤️"
+  };
+
+  msg.innerHTML=messages[n];
+}
+</script>
+
+</body>
+</html>
