@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Krishna ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  height:100vh;
+  background:url("mountains.jpg") center/cover no-repeat;
+  overflow:hidden;
+  font-family:'Poppins', sans-serif;
+}
+
+/* Overlay */
+.overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+}
+
+/* Center Box */
+.proposal-box{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+  color:#fff;
+  padding:40px;
+  width:80%;
+  max-width:700px;
+  animation:fadeIn 3s ease;
+}
+
+/* Heading */
+h1{
+  font-family:'Great Vibes', cursive;
+  font-size:64px;
+  color:#ffd6e8;
+  margin-bottom:20px;
+  animation:glow 2s infinite alternate;
+}
+
+/* Text */
+#text{
+  font-size:20px;
+  line-height:1.8;
+  min-height:220px;
+}
+
+/* Button */
+button{
+  margin-top:30px;
+  padding:15px 40px;
+  border:none;
+  border-radius:40px;
+  background:linear-gradient(45deg,#ff5fa2,#ff9ecb);
+  color:white;
+  font-size:18px;
+  cursor:pointer;
+  box-shadow:0 0 20px #ff9ecb;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.1);
+}
+
+/* Hearts */
+.heart{
+  position:absolute;
+  color:#ff7eb3;
+  font-size:24px;
+  animation:floatUp 6s linear infinite;
+}
+
+/* Petals */
+.petal{
+  position:absolute;
+  width:20px;
+  height:20px;
+  background:rgba(255,192,203,0.9);
+  border-radius:50% 50% 50% 0;
+  transform:rotate(45deg);
+  animation:fall 10s linear infinite;
+}
+
+/* Animations */
+@keyframes fadeIn{
+  from{opacity:0; transform:translate(-50%,-40%);}
+  to{opacity:1; transform:translate(-50%,-50%);}
+}
+
+@keyframes glow{
+  from{text-shadow:0 0 10px #ff9ecb;}
+  to{text-shadow:0 0 30px #ff5fa2;}
+}
+
+@keyframes floatUp{
+  0%{transform:translateY(0); opacity:1;}
+  100%{transform:translateY(-800px); opacity:0;}
+}
+
+@keyframes fall{
+  0%{top:-10%; opacity:1;}
+  100%{top:110%; opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="proposal-box">
+  <h1>Krishna ❤️</h1>
+  <div id="text"></div>
+  <button onclick="showLove()">Yes, Forever 💍</button>
+</div>
+
+<audio autoplay loop>
+  <source src="Pyar.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const message = `
+Krishna Gohil,
+
+In this vast world full of noise,
+you are my calm.
+
+Like these mountains,
+strong yet gentle,
+you make my life beautiful.
+
+Every smile of yours feels like home.
+Every moment with you feels magical.
+
+So today, with all my heart...
+
+Will you be mine forever? 💖
+`;
+
+let i = 0;
+function typeText(){
+  if(i < message.length){
+    document.getElementById("text").innerHTML += message.charAt(i);
+    i++;
+    setTimeout(typeText, 60);
+  }
+}
+typeText();
+
+/* Hearts */
+setInterval(()=>{
+  const heart = document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="❤️";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.bottom="0px";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),6000);
+},500);
+
+/* Petals */
+setInterval(()=>{
+  const petal = document.createElement("div");
+  petal.className="petal";
+  petal.style.left=Math.random()*100+"vw";
+  document.body.appendChild(petal);
+  setTimeout(()=>petal.remove(),10000);
+},300);
+
+/* Final click */
+function showLove(){
+  alert("I love you Krishna ❤️ Forever starts now");
+}
+</script>
+
+</body>
+</html>
