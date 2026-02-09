@@ -2,72 +2,76 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Chocolate Day ❤️</title>
+<title>Chocolate Hamper For You ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
 body{
-  margin:0;
   font-family:'Poppins',sans-serif;
-  background:radial-gradient(circle,#3b1f1f,#120707);
+  min-height:100vh;
+  background:
+    linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.85)),
+    url("https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=2000&q=80");
+  background-size:cover;
+  background-position:center;
   color:#fff;
   display:flex;
-  justify-content:center;
   align-items:center;
-  min-height:100vh;
-  overflow:hidden;
+  justify-content:center;
 }
 
 .container{
+  max-width:1100px;
   text-align:center;
-  max-width:900px;
-  padding:30px;
+  padding:40px;
 }
 
 h1{
-  font-size:38px;
+  font-size:42px;
   margin-bottom:10px;
 }
 
 .subtitle{
   font-size:18px;
-  opacity:0.85;
+  opacity:0.9;
   margin-bottom:30px;
 }
 
-/* BOX */
-.box{
-  width:320px;
-  height:220px;
-  background:linear-gradient(145deg,#5a2d2d,#3a1c1c);
-  border-radius:20px;
-  margin:0 auto;
+/* HAMPER */
+.hamper{
   position:relative;
+  width:420px;
+  height:260px;
+  margin:0 auto;
+  background:linear-gradient(145deg,#5a2d2d,#3b1c1c);
+  border-radius:25px;
+  box-shadow:0 30px 60px rgba(0,0,0,0.7);
   cursor:pointer;
-  box-shadow:0 25px 40px rgba(0,0,0,0.6);
-  transition:0.8s ease;
+  transition:1s ease;
 }
 
-.box.open{
-  transform:rotateX(60deg) translateY(-40px);
-}
-
-.box::before{
-  content:"🍫";
+.hamper::before{
+  content:"🍫🍬🍩🍪";
   position:absolute;
-  font-size:60px;
-  top:50%;
+  top:-45px;
   left:50%;
-  transform:translate(-50%,-50%);
+  transform:translateX(-50%);
+  font-size:50px;
 }
 
-/* CHOCOLATES */
+.hamper.open{
+  transform:translateY(-30px) scale(1.05);
+}
+
+/* CHOCOLATES INSIDE */
 .chocolates{
+  margin-top:50px;
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:20px;
-  margin-top:40px;
+  gap:22px;
   opacity:0;
   pointer-events:none;
   transition:1s ease;
@@ -79,19 +83,25 @@ h1{
 }
 
 .choco{
+  padding:18px;
+  border-radius:16px;
   background:linear-gradient(145deg,#6b3b2a,#3d1e14);
-  border-radius:15px;
-  padding:20px;
-  cursor:pointer;
   box-shadow:0 15px 25px rgba(0,0,0,0.6);
-  transition:0.3s ease;
+  cursor:pointer;
+  transition:0.3s;
 }
 
 .choco:hover{
-  transform:scale(1.05);
+  transform:scale(1.08);
 }
 
-.choco.gold{
+.brand{
+  font-size:14px;
+  opacity:0.8;
+  margin-top:6px;
+}
+
+.gold{
   background:linear-gradient(145deg,#d4af37,#b38b2e);
   color:#000;
   font-weight:500;
@@ -99,17 +109,15 @@ h1{
 
 /* MESSAGE */
 .message{
-  margin-top:40px;
+  margin-top:35px;
   font-size:20px;
   line-height:1.8;
-  min-height:140px;
+  min-height:150px;
   opacity:0;
-  transition:0.5s ease;
+  transition:0.6s ease;
 }
 
-.message.show{
-  opacity:1;
-}
+.message.show{opacity:1;}
 </style>
 </head>
 
@@ -117,58 +125,87 @@ h1{
 
 <div class="container">
   <h1>Happy Chocolate Day 🍫❤️</h1>
-  <div class="subtitle">Tap the box… something sweet waits for you</div>
+  <div class="subtitle">Tap the chocolate hamper made just for you</div>
 
-  <div class="box" onclick="openBox()"></div>
+  <div class="hamper" onclick="openHamper()"></div>
 
   <div class="chocolates" id="chocolates">
-    <div class="choco" onclick="showMsg(1)">Dark Chocolate</div>
-    <div class="choco" onclick="showMsg(2)">Milk Chocolate</div>
-    <div class="choco" onclick="showMsg(3)">White Chocolate</div>
-    <div class="choco" onclick="showMsg(4)">Hazelnut</div>
-    <div class="choco" onclick="showMsg(5)">Caramel</div>
-    <div class="choco gold" onclick="showMsg(6)">Golden One</div>
+    <div class="choco" onclick="showMsg(1)">
+      Dark Chocolate
+      <div class="brand">Intense Love</div>
+    </div>
+
+    <div class="choco" onclick="showMsg(2)">
+      Milk Chocolate
+      <div class="brand">Dairy Milk Vibe</div>
+    </div>
+
+    <div class="choco" onclick="showMsg(3)">
+      Wafer Chocolate
+      <div class="brand">KitKat Mood</div>
+    </div>
+
+    <div class="choco" onclick="showMsg(4)">
+      Nutty Chocolate
+      <div class="brand">Ferrero Feel</div>
+    </div>
+
+    <div class="choco" onclick="showMsg(5)">
+      Caramel Bite
+      <div class="brand">Silk Style</div>
+    </div>
+
+    <div class="choco gold" onclick="showMsg(6)">
+      Golden Chocolate
+      <div class="brand">My Heart</div>
+    </div>
   </div>
 
   <div class="message" id="message"></div>
 </div>
 
 <script>
-function openBox(){
-  document.querySelector('.box').classList.add('open');
+function openHamper(){
+  document.querySelector('.hamper').classList.add('open');
   document.getElementById('chocolates').classList.add('show');
 }
 
 function showMsg(n){
-  const msg=document.getElementById('message');
-  msg.classList.add('show');
+  const m=document.getElementById("message");
+  m.classList.add("show");
 
   const messages={
     1:`Tere pyaar mein duba hua musafir hoon main.  
        Tujh mein doob kar tera swaad lena chahta hoon.  
-       Kehti hai duniya tu mere liye khoob nahi,  
+       Kehte hain log tu mere liye nahi,  
        unhe kaun bataye tu woh amrit hai  
        jisse main hamesha peena chahta hoon.`,
 
-    2:"You are my comfort, my sweetness, the reason everything feels better.",
+    2:`You are my comfort, my sweetness,  
+       the chocolate I crave after every hard day.`,
 
-    3:"Rare and pure, you are one of a kind in my life.",
+    3:`Break me anytime, share me anytime,  
+       just like KitKat moments — with you.`,
 
-    4:"You add warmth, laughter, and surprise to my days.",
+    4:`You bring surprise, warmth, and richness  
+       to my life, just by being you.`,
 
-    5:"Soft, sweet, and impossible to resist — just like you.",
+    5:`Soft, melting, and impossible to resist.  
+       That’s you in every way.`,
 
     6:`This is my heart, full of chocolates and warmth for you.  
-       The way I love you is more than this.  
-       This is just a token of love, with every bit meant only for you.  
+       The way I love you is far more than this hamper.  
+
+       This is only a token,  
+       but every piece belongs to you.  
 
        Bite me, taste me.  
        I promise I will never hurt you again.  
        I promise to fill your life with sweetness, love,  
-       and the best things in the world under your feet. ❤️`
+       and every beautiful thing under your feet. ❤️`
   };
 
-  msg.innerHTML=messages[n];
+  m.innerHTML=messages[n];
 }
 </script>
 
