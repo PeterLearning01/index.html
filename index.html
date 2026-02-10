@@ -11,79 +11,111 @@
 body {
     margin: 0;
     padding: 0;
+    height: 100vh;
     font-family: 'Poppins', sans-serif;
-    background: radial-gradient(circle at top, #fde2e4, #f9c5d1);
-    overflow: hidden;
+    background-image: url("https://images.unsplash.com/photo-1542718610-a1d656d1884c");
+    background-size: cover;
+    background-position: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    overflow: hidden;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 220, 230, 0.88);
 }
 
 .container {
+    position: relative;
+    z-index: 2;
     text-align: center;
-    max-width: 360px;
+    max-width: 400px;
     padding: 20px;
 }
 
 h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 22px;
+    font-size: 24px;
     color: #5a2a27;
     margin-bottom: 10px;
 }
 
 .text {
+    min-height: 120px;
     font-size: 16px;
     color: #6b2f2f;
-    min-height: 90px;
     line-height: 1.6;
 }
 
 .teddy {
-    font-size: 120px;
+    font-size: 220px;
+    margin: 10px 0;
     cursor: pointer;
-    animation: breathe 4s infinite;
-    margin: 15px 0;
+    animation: breathe 3s infinite;
 }
 
 @keyframes breathe {
     0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+    50% { transform: scale(1.08); }
     100% { transform: scale(1); }
 }
 
 button {
+    display: none;
     margin-top: 12px;
-    padding: 10px 18px;
+    padding: 10px 22px;
+    border-radius: 25px;
     border: none;
-    border-radius: 20px;
     background: #b23a48;
     color: white;
     font-size: 14px;
     cursor: pointer;
+}
+
+/* Final popup */
+.popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
     display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
 }
 
-button:hover {
-    background: #8c2f39;
+.popup-content {
+    background: #fff0f5;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    animation: pop 0.6s ease;
 }
 
-.hearts {
-    position: absolute;
+@keyframes pop {
+    from { transform: scale(0.6); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.popup h2 {
+    font-size: 42px;
+    color: #b23a48;
+    margin-bottom: 12px;
+}
+
+.popup p {
     font-size: 16px;
-    animation: float 4s linear infinite;
-    opacity: 0.6;
-}
-
-@keyframes float {
-    0% { transform: translateY(100vh); }
-    100% { transform: translateY(-10vh); }
+    color: #6b2f2f;
+    line-height: 1.6;
 }
 </style>
 </head>
 
 <body>
+
+<div class="overlay"></div>
 
 <div class="container">
     <h1>Happy Teddy Day Krishnaba Gohil</h1>
@@ -92,29 +124,65 @@ button:hover {
     <button id="holdBtn">Hold me longer</button>
 </div>
 
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <h2>I LOVE YOU</h2>
+        <p>
+            I am sorry for every moment I made you feel hurt or unheard.  
+            Thank you for your patience your heart and your love.  
+            I am deeply grateful for you and I choose you every day.
+        </p>
+    </div>
+</div>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+    <source src="Tumhe Kitna Pyaar Karte Bawaal 320 Kbps.mp3" type="audio/mpeg">
+</audio>
+
 <script>
 const messages = [
-    "Close your eyes for a second. Imagine a hug that understands you. This teddy is that hug.",
-    "Tap the teddy whenever you need love.",
-    "This hug is for all the days you felt tired but stayed strong.",
-    "When the world feels heavy rest here. I will protect your peace.",
-    "I am always here. Day night forever.",
-    "You are safe. You are loved. You are enough. And I am not going anywhere.",
-    "Happy Teddy Day my love. This teddy carries my arms around you even when I am not there."
+    "Hey Krishnaba Gohil. This teddy is my way of holding you close.",
+    "Whenever life feels heavy tap this teddy and feel my warmth.",
+    "You have been strong even when you were tired. I see you.",
+    "I promise to protect your peace and care for your heart.",
+    "I love you softly deeply and forever."
 ];
 
 let index = 0;
 let charIndex = 0;
 let currentText = "";
+
 const textDiv = document.getElementById("text");
 const teddy = document.getElementById("teddy");
 const holdBtn = document.getElementById("holdBtn");
+const popup = document.getElementById("popup");
+const music = document.getElementById("bgMusic");
+
+music.volume = 0.6;
+
+document.body.addEventListener("click", () => {
+    music.play();
+}, { once: true });
+
+function fadeMusic(direction) {
+    const step = 0.05;
+    const interval = setInterval(() => {
+        if (direction === "down" && music.volume > 0.15) {
+            music.volume -= step;
+        } else if (direction === "up" && music.volume < 0.6) {
+            music.volume += step;
+        } else {
+            clearInterval(interval);
+        }
+    }, 100);
+}
 
 function speak(text) {
+    fadeMusic("down");
     const speech = new SpeechSynthesisUtterance(text);
     speech.rate = 0.9;
-    speech.pitch = 1;
-    speech.volume = 1;
+    speech.onend = () => fadeMusic("up");
     speechSynthesis.speak(speech);
 }
 
@@ -126,8 +194,9 @@ function typeText() {
         setTimeout(typeText, 40);
     } else {
         speak(messages[index]);
-        if (index === 1) teddy.style.display = "block";
-        if (index === 5) holdBtn.style.display = "inline-block";
+        if (index === messages.length - 1) {
+            holdBtn.style.display = "inline-block";
+        }
     }
 }
 
@@ -135,7 +204,7 @@ typeText();
 
 teddy.addEventListener("click", () => {
     if (navigator.vibrate) {
-        navigator.vibrate([200, 100, 200]);
+        navigator.vibrate([200, 120, 200]);
     }
 
     index++;
@@ -147,30 +216,11 @@ teddy.addEventListener("click", () => {
 });
 
 holdBtn.addEventListener("click", () => {
+    popup.style.display = "flex";
     if (navigator.vibrate) {
-        navigator.vibrate([300, 150, 300, 150, 300]);
+        navigator.vibrate([300, 200, 300]);
     }
-
-    document.body.style.background = "radial-gradient(circle at center, #fbc2eb, #a18cd1)";
-    currentText = "";
-    charIndex = 0;
-    index = 6;
-    typeText();
-    createHearts();
 });
-
-function createHearts() {
-    for (let i = 0; i < 15; i++) {
-        const heart = document.createElement("div");
-        heart.className = "hearts";
-        heart.innerText = "❤️";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = (3 + Math.random() * 3) + "s";
-        document.body.appendChild(heart);
-
-        setTimeout(() => heart.remove(), 6000);
-    }
-}
 </script>
 
 </body>
