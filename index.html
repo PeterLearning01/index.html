@@ -3,85 +3,115 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Promise Day</title>
+<title>The Words That Are Left Unsaid</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Dancing+Script:wght@500;600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', sans-serif;
     height: 100vh;
-    background: linear-gradient(180deg, #0f2027, #203a43, #2c5364);
+    background: linear-gradient(180deg, #2c3e50, #4ca1af);
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #fff;
-    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
 }
 
-.container {
-    text-align: center;
+.diary {
+    width: 90%;
     max-width: 420px;
-    padding: 25px;
+    height: 580px;
+    background: #fff8ee;
+    border-radius: 18px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    padding: 30px;
+    position: relative;
+    perspective: 1200px;
+}
+
+.page {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    background: #fff8ee;
+    border-radius: 18px;
+    padding: 30px;
+    box-sizing: border-box;
+    transform-origin: left;
+    transition: transform 0.9s ease;
+}
+
+.page.flip {
+    transform: rotateY(-180deg);
+}
+
+.diary-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    text-align: center;
+    color: #4a2c2a;
+}
+
+.date {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 6px;
+    opacity: 0.7;
 }
 
 .title {
     font-family: 'Playfair Display', serif;
-    font-size: 26px;
-    margin-bottom: 20px;
+    font-size: 20px;
+    text-align: center;
+    margin: 18px 0;
+    color: #4a2c2a;
 }
 
-.text {
-    font-size: 17px;
+.promise-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: 22px;
     line-height: 1.8;
-    min-height: 120px;
-    opacity: 0.95;
+    color: #5a3a2e;
+    min-height: 240px;
 }
 
-button {
-    margin-top: 25px;
-    padding: 12px 26px;
-    border: none;
-    border-radius: 30px;
-    background: #e6b980;
-    color: #3a1f04;
-    font-size: 15px;
-    cursor: pointer;
+.tap {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 14px;
+    opacity: 0.7;
 }
 
-.book {
-    font-size: 90px;
-    margin-bottom: 15px;
-    animation: breathe 3s infinite;
-}
-
-@keyframes breathe {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-.glow {
-    animation: glow 2s infinite;
-}
-
-@keyframes glow {
-    0% { box-shadow: 0 0 0 rgba(255,255,255,0); }
-    50% { box-shadow: 0 0 25px rgba(255,255,255,0.3); }
-    100% { box-shadow: 0 0 0 rgba(255,255,255,0); }
+.signature {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    text-align: right;
+    font-family: 'Dancing Script', cursive;
+    font-size: 20px;
+    color: #4a2c2a;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-    <div class="book">📖</div>
-    <div class="title" id="title">Promise Day</div>
-    <div class="text" id="text"></div>
-    <button id="btn">Continue</button>
+<div class="diary" id="diary">
+    <div class="page" id="page">
+        <div class="diary-name">The Words That Are Left Unsaid</div>
+        <div class="date" id="todayDate"></div>
+
+        <div class="title">Promise Day<br>Krishnaba Gohil</div>
+
+        <div class="promise-text" id="text"></div>
+
+        <div class="tap">Tap to turn the page</div>
+
+        <div class="signature" id="signature"></div>
+    </div>
 </div>
 
 <audio id="bgMusic" loop>
@@ -89,61 +119,76 @@ button {
 </audio>
 
 <script>
-const pages = [
+const promises = [
     "Some promises are not meant to impress. They are meant to stay.",
     "I promise to listen even when it is uncomfortable.",
     "I promise to choose patience over ego.",
-    "I promise to protect your peace not disturb it.",
+    "I promise to protect your peace and your heart.",
     "I promise to grow even when it is hard.",
     "I promise to stay when it is easier to leave.",
     "Even on the days I fail, I promise I will not stop trying.",
     "You do not need to promise me anything. Just be you. I choose you as you are."
 ];
 
-let page = 0;
+let index = 0;
 let charIndex = 0;
 let currentText = "";
 
 const textDiv = document.getElementById("text");
-const btn = document.getElementById("btn");
+const page = document.getElementById("page");
+const signature = document.getElementById("signature");
 const music = document.getElementById("bgMusic");
 
 music.volume = 0.4;
+
+const dateOptions = { day: "numeric", month: "long", year: "numeric" };
+document.getElementById("todayDate").innerText =
+    new Date().toLocaleDateString("en-GB", dateOptions);
 
 document.body.addEventListener("click", () => {
     music.play();
 }, { once: true });
 
+function speak(text) {
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.rate = 0.85;
+    speech.pitch = 1;
+    speechSynthesis.speak(speech);
+}
+
 function typeText() {
-    if (charIndex < pages[page].length) {
-        currentText += pages[page].charAt(charIndex);
+    if (charIndex < promises[index].length) {
+        currentText += promises[index].charAt(charIndex);
         textDiv.innerText = currentText;
         charIndex++;
         setTimeout(typeText, 45);
     } else {
-        if (page === pages.length - 1) {
-            btn.innerText = "Hold this promise";
-            btn.classList.add("glow");
+        speak(promises[index]);
+        if (index === promises.length - 1) {
+            signature.innerHTML = "With love<br>Shubham Sharma<br>& Krishnaba Gohil";
         }
     }
 }
 
 typeText();
 
-btn.addEventListener("click", () => {
-    if (navigator.vibrate) {
-        navigator.vibrate([200, 150, 200]);
-    }
+document.getElementById("diary").addEventListener("click", () => {
+    if (index >= promises.length - 1) return;
 
-    page++;
-    if (page < pages.length) {
+    page.classList.add("flip");
+
+    setTimeout(() => {
+        page.classList.remove("flip");
+        index++;
         charIndex = 0;
         currentText = "";
         textDiv.innerText = "";
         typeText();
-    } else {
-        btn.style.display = "none";
-    }
+
+        if (navigator.vibrate) {
+            navigator.vibrate([150, 120, 150]);
+        }
+    }, 900);
 });
 </script>
 
