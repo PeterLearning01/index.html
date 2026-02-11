@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promise Day</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    background: linear-gradient(180deg, #0f2027, #203a43, #2c5364);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    max-width: 420px;
+    padding: 25px;
+}
+
+.title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+.text {
+    font-size: 17px;
+    line-height: 1.8;
+    min-height: 120px;
+    opacity: 0.95;
+}
+
+button {
+    margin-top: 25px;
+    padding: 12px 26px;
+    border: none;
+    border-radius: 30px;
+    background: #e6b980;
+    color: #3a1f04;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.book {
+    font-size: 90px;
+    margin-bottom: 15px;
+    animation: breathe 3s infinite;
+}
+
+@keyframes breathe {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.glow {
+    animation: glow 2s infinite;
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 0 rgba(255,255,255,0); }
+    50% { box-shadow: 0 0 25px rgba(255,255,255,0.3); }
+    100% { box-shadow: 0 0 0 rgba(255,255,255,0); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="book">📖</div>
+    <div class="title" id="title">Promise Day</div>
+    <div class="text" id="text"></div>
+    <button id="btn">Continue</button>
+</div>
+
+<audio id="bgMusic" loop>
+    <source src="promise-music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const pages = [
+    "Some promises are not meant to impress. They are meant to stay.",
+    "I promise to listen even when it is uncomfortable.",
+    "I promise to choose patience over ego.",
+    "I promise to protect your peace not disturb it.",
+    "I promise to grow even when it is hard.",
+    "I promise to stay when it is easier to leave.",
+    "Even on the days I fail, I promise I will not stop trying.",
+    "You do not need to promise me anything. Just be you. I choose you as you are."
+];
+
+let page = 0;
+let charIndex = 0;
+let currentText = "";
+
+const textDiv = document.getElementById("text");
+const btn = document.getElementById("btn");
+const music = document.getElementById("bgMusic");
+
+music.volume = 0.4;
+
+document.body.addEventListener("click", () => {
+    music.play();
+}, { once: true });
+
+function typeText() {
+    if (charIndex < pages[page].length) {
+        currentText += pages[page].charAt(charIndex);
+        textDiv.innerText = currentText;
+        charIndex++;
+        setTimeout(typeText, 45);
+    } else {
+        if (page === pages.length - 1) {
+            btn.innerText = "Hold this promise";
+            btn.classList.add("glow");
+        }
+    }
+}
+
+typeText();
+
+btn.addEventListener("click", () => {
+    if (navigator.vibrate) {
+        navigator.vibrate([200, 150, 200]);
+    }
+
+    page++;
+    if (page < pages.length) {
+        charIndex = 0;
+        currentText = "";
+        textDiv.innerText = "";
+        typeText();
+    } else {
+        btn.style.display = "none";
+    }
+});
+</script>
+
+</body>
+</html>
