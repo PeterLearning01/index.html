@@ -3,70 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Premium Kiss Day Krishnaba Gohil</title>
+<title>Kiss Day Cinematic</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
-body{
+*{
     margin:0;
     padding:0;
-    overflow:hidden;
+    box-sizing:border-box;
+}
+
+body{
     height:100vh;
-    background: radial-gradient(circle at top, #0f2027, #000000);
-    font-family:'Dancing Script', cursive;
+    overflow:hidden;
+    font-family:'Poppins',sans-serif;
     color:white;
 }
 
-/* Moon */
-.moon{
-    position:absolute;
-    top:60px;
-    right:120px;
-    width:140px;
-    height:140px;
-    background:#fff;
-    border-radius:50%;
-    box-shadow:0 0 60px #ffffffaa;
+/* Background image */
+.background{
+    position:fixed;
+    inset:0;
+    background:url("background.jpg") center/cover no-repeat;
+    filter:blur(4px) brightness(0.4);
+    animation:zoom 20s infinite alternate ease-in-out;
+    z-index:-2;
 }
 
-/* Couple silhouette */
-.couple{
-    position:absolute;
-    bottom:0;
-    width:100%;
-    height:50vh;
-    background:linear-gradient(to top, #000 60%, transparent);
+@keyframes zoom{
+    from{transform:scale(1);}
+    to{transform:scale(1.1);}
 }
 
-/* Center content */
+/* Dark overlay */
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    z-index:-1;
+}
+
+/* Content */
 .container{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
     text-align:center;
-    max-width:800px;
-    z-index:2;
+    padding:20px;
 }
 
-.title{
-    font-family:'Playfair Display', serif;
-    font-size:38px;
+h1{
+    font-family:'Playfair Display',serif;
+    font-size:42px;
+    margin-bottom:30px;
 }
 
 .message{
-    margin-top:20px;
-    font-size:24px;
-    min-height:120px;
+    max-width:800px;
+    font-size:20px;
+    line-height:1.8;
+    opacity:0;
+    animation:fadeIn 3s forwards 1s;
+}
+
+@keyframes fadeIn{
+    to{opacity:1;}
 }
 
 button{
-    margin-top:30px;
-    padding:12px 30px;
+    margin-top:40px;
+    padding:14px 35px;
     border:none;
-    border-radius:40px;
-    background:linear-gradient(45deg,#ff416c,#ff4b2b);
+    border-radius:50px;
+    background:#ff2e63;
     color:white;
     font-size:18px;
     cursor:pointer;
@@ -75,21 +87,7 @@ button{
 
 button:hover{
     transform:scale(1.1);
-}
-
-/* Rose petals */
-.petal{
-    position:absolute;
-    top:-10px;
-    font-size:18px;
-    animation:fall linear infinite;
-}
-
-@keyframes fall{
-    to{
-        transform:translateY(110vh) rotate(360deg);
-        opacity:0;
-    }
+    background:#ff004c;
 }
 
 /* Final scene */
@@ -97,102 +95,65 @@ button:hover{
     position:fixed;
     inset:0;
     background:black;
-    display:none;
+    display:flex;
     justify-content:center;
     align-items:center;
     flex-direction:column;
     text-align:center;
-    animation:fadeIn 2s forwards;
+    opacity:0;
+    pointer-events:none;
+    transition:1.5s;
 }
 
-.finalScene h1{
+.finalScene.active{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.finalScene h2{
     font-size:60px;
-    color:#ff4b2b;
+    color:#ff2e63;
+    margin-bottom:20px;
 }
 
 .finalScene p{
     font-size:22px;
-    max-width:70%;
-}
-
-@keyframes fadeIn{
-    from{opacity:0;}
-    to{opacity:1;}
+    max-width:700px;
+    line-height:1.7;
 }
 </style>
 </head>
 
 <body>
 
-<div class="moon"></div>
-<div class="couple"></div>
-
-<audio id="bgMusic" loop>
-    <source src="your-music-file.mp3" type="audio/mpeg">
-</audio>
+<div class="background"></div>
+<div class="overlay"></div>
 
 <div class="container">
-    <div class="title">Happy Kiss Day Krishnaba Gohil</div>
-    <div class="message" id="text"></div>
-    <button onclick="startKiss()">Come Close</button>
+    <h1>Happy Kiss Day Krishnaba Gohil</h1>
+
+    <div class="message">
+        Krishnaba, under this moonlight I do not just want to kiss you.  
+        I want to hold you close and promise that every kiss from me carries loyalty, respect and forever.  
+        You are someone I cherish deeply and I am grateful for you every single day.
+    </div>
+
+    <button onclick="showFinal()">Come Close</button>
 </div>
 
-<div class="finalScene" id="final">
-    <h1>I LOVE YOU KRISHNABA</h1>
+<div class="finalScene" id="finalScene">
+    <h2>I LOVE YOU</h2>
     <p>
-        You are not just someone I kiss.  
-        You are someone I respect, protect and cherish.  
+        You are not just my love.  
+        You are my peace, my warmth and my forever.  
         I promise to love you gently, honestly and deeply.  
-        Thank you for being in my life.  
-        I am forever grateful for you.
+        Thank you for choosing me.
     </p>
 </div>
 
 <script>
-const message = "Krishnaba, tonight under this moonlight, I do not just want to kiss you. I want to hold you close and promise that every kiss from me carries loyalty, respect and forever.";
-
-let i = 0;
-function typeWriter(){
-    if(i < message.length){
-        document.getElementById("text").innerHTML += message.charAt(i);
-        i++;
-        setTimeout(typeWriter,40);
-    }
-}
-typeWriter();
-
-/* Rose petals */
-function createPetal(){
-    const petal = document.createElement("div");
-    petal.classList.add("petal");
-    petal.innerHTML = "🌹";
-    petal.style.left = Math.random()*100 + "vw";
-    petal.style.animationDuration = 5 + Math.random()*5 + "s";
-    document.body.appendChild(petal);
-
-    setTimeout(()=>petal.remove(),10000);
-}
-setInterval(createPetal,500);
-
-/* Kiss moment */
-function startKiss(){
-    const music = document.getElementById("bgMusic");
-    music.volume = 0.6;
-    music.play();
-
-    speak("This kiss is full of love and gratitude for you Krishnaba");
-
-    setTimeout(()=>{
-        document.getElementById("final").style.display="flex";
-    },4000);
-}
-
-/* Voice */
-function speak(text){
-    const speech = new SpeechSynthesisUtterance(text);
-    speech.rate = 0.9;
-    speech.pitch = 1;
-    window.speechSynthesis.speak(speech);
+function showFinal(){
+    document.getElementById("finalScene").classList.add("active");
 }
 </script>
 
