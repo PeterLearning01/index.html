@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steam & Sip | Chai • Momos • Sandwiches</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    background:#0f0f0f;
+    color:white;
+}
+
+/* HERO SECTION */
+header{
+    height:100vh;
+    background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+    url('https://images.unsplash.com/photo-1511920170033-f8396924c348');
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+}
+
+/* STEAM EFFECT */
+.steam{
+    position:absolute;
+    bottom:120px;
+    width:8px;
+    height:80px;
+    background:rgba(255,255,255,0.4);
+    border-radius:50%;
+    animation:steam 3s infinite ease-in-out;
+}
+
+.steam:nth-child(1){ left:48%; animation-delay:0s; }
+.steam:nth-child(2){ left:50%; animation-delay:1s; }
+.steam:nth-child(3){ left:52%; animation-delay:2s; }
+
+@keyframes steam{
+    0%{ transform:translateY(0) scaleX(1); opacity:0.7; }
+    50%{ transform:translateY(-80px) scaleX(1.5); opacity:0.3; }
+    100%{ transform:translateY(-150px) scaleX(2); opacity:0; }
+}
+
+header h1{
+    font-size:65px;
+    color:#ffb703;
+    text-shadow:0 0 20px #ff7b00;
+}
+
+header p{
+    font-size:22px;
+    margin-top:15px;
+}
+
+/* BUTTON STYLE */
+.btn{
+    margin:15px 10px;
+    padding:12px 28px;
+    background:#ff7b00;
+    color:white;
+    text-decoration:none;
+    border-radius:30px;
+    font-weight:600;
+    transition:0.3s;
+    display:inline-block;
+    box-shadow:0 0 15px #ff7b00;
+}
+
+.btn:hover{
+    background:#ffb703;
+    transform:scale(1.08);
+    box-shadow:0 0 25px #ffb703;
+}
+
+/* SECTIONS */
+.section{
+    padding:70px 10%;
+    text-align:center;
+}
+
+.section h2{
+    color:#ffb703;
+    margin-bottom:40px;
+    font-size:35px;
+}
+
+.menu-item{
+    background:#1a1a1a;
+    margin:15px;
+    padding:25px;
+    border-radius:15px;
+    display:inline-block;
+    width:250px;
+    box-shadow:0 0 20px rgba(255,123,0,0.2);
+    transition:0.3s;
+}
+
+.menu-item:hover{
+    transform:translateY(-8px);
+}
+
+.menu-item h3{
+    color:#ff7b00;
+    margin-bottom:10px;
+}
+
+footer{
+    background:#000;
+    padding:20px;
+    text-align:center;
+    margin-top:40px;
+    color:#aaa;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Steam & Sip</h1>
+    <p>Freshly Brewed • Steaming Hot • Street Style</p>
+
+    <a href="#menu" class="btn">View Menu</a>
+    <a href="https://wa.me/91XXXXXXXXXX" class="btn">Order on WhatsApp</a>
+    <a href="https://www.swiggy.com" class="btn">Order on Swiggy</a>
+    <a href="https://www.zomato.com" class="btn">Order on Zomato</a>
+
+    <!-- Steam Animation -->
+    <div class="steam"></div>
+    <div class="steam"></div>
+    <div class="steam"></div>
+</header>
+
+<section id="menu" class="section">
+    <h2>Our Special Menu</h2>
+
+    <div class="menu-item">
+        <h3>Classic Chai</h3>
+        <p>₹20</p>
+    </div>
+
+    <div class="menu-item">
+        <h3>Masala Chai</h3>
+        <p>₹25</p>
+    </div>
+
+    <div class="menu-item">
+        <h3>Veg Momos</h3>
+        <p>₹60</p>
+    </div>
+
+    <div class="menu-item">
+        <h3>Paneer Momos</h3>
+        <p>₹80</p>
+    </div>
+
+    <div class="menu-item">
+        <h3>Veg Sandwich</h3>
+        <p>₹60</p>
+    </div>
+
+</section>
+
+<section class="section">
+    <h2>Visit Us</h2>
+    <p>Your Stall Location Here</p>
+    <a href="https://maps.google.com" class="btn">Open in Google Maps</a>
+</section>
+
+<section class="section">
+    <h2>Contact</h2>
+    <p>📞 +91 XXXXX XXXXX</p>
+    <p>📧 info@steamandsip.in</p>
+</section>
+
+<footer>
+    <p>© 2026 Steam & Sip | All Rights Reserved</p>
+</footer>
+
+</body>
+</html>
