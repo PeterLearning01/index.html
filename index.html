@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HERTHREAD | Custom Tops</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Montserrat',sans-serif;
+    background:#111;
+    color:white;
+}
+
+/* HEADER */
+header{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    position:fixed;
+    width:100%;
+    top:0;
+    background:#111;
+    z-index:1000;
+}
+
+.brand{
+    font-family:'Playfair Display',serif;
+    font-size:28px;
+    letter-spacing:3px;
+}
+
+.menu-icon{
+    position:absolute;
+    left:20px;
+    font-size:28px;
+    cursor:pointer;
+}
+
+.side-menu{
+    position:fixed;
+    top:0;
+    left:-250px;
+    width:250px;
+    height:100%;
+    background:#000;
+    padding:60px 20px;
+    transition:0.4s;
+}
+
+.side-menu a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    margin:20px 0;
+    font-weight:500;
+}
+
+.side-menu a:hover{
+    color:#ff4d6d;
+}
+
+.hero{
+    margin-top:100px;
+    text-align:center;
+    padding:40px 10%;
+}
+
+.hero h1{
+    font-size:40px;
+    font-family:'Playfair Display',serif;
+}
+
+.notify{
+    margin-top:20px;
+    padding:12px 25px;
+    background:#ff4d6d;
+    border:none;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    border-radius:30px;
+}
+
+.products{
+    padding:60px 10%;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+}
+
+.product{
+    background:#1c1c1c;
+    padding:15px;
+    border-radius:15px;
+    transition:0.3s;
+}
+
+.product img{
+    width:100%;
+    border-radius:10px;
+}
+
+.product h3{
+    margin-top:10px;
+}
+
+.product:hover{
+    transform:translateY(-10px);
+}
+
+footer{
+    background:#000;
+    text-align:center;
+    padding:30px;
+    margin-top:40px;
+}
+
+footer a{
+    color:#ff4d6d;
+    text-decoration:none;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <div class="brand">HERTHREAD</div>
+</header>
+
+<div class="side-menu" id="menu">
+    <a href="#">Home</a>
+    <a href="#">Shop Tops</a>
+    <a href="#">Login</a>
+    <a href="#">Create Account</a>
+    <a href="#">My Wishlist</a>
+    <a href="#">Contact Us</a>
+</div>
+
+<section class="hero">
+    <h1>Customized Tops Designed With Love</h1>
+    <p>Limited Edition • Hand Designed • Made For Her</p>
+    <button class="notify" onclick="alert('You will be notified when sale starts!')">
+        Sale Starts Soon – Click To Get Notified
+    </button>
+</section>
+
+<section class="products">
+    <div class="product">
+        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab" alt="Top 1">
+        <h3>Floral Custom Crop Top</h3>
+    </div>
+
+    <div class="product">
+        <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d" alt="Top 2">
+        <h3>Minimal Nude Aesthetic Top</h3>
+    </div>
+
+    <div class="product">
+        <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c" alt="Top 3">
+        <h3>Bold Black Statement Top</h3>
+    </div>
+</section>
+
+<footer>
+    <p>Follow us on Instagram:</p>
+    <a href="https://instagram.com/yourpage" target="_blank">@yourpage</a>
+    <p style="margin-top:10px;">Contact Us: info@herthread.com</p>
+</footer>
+
+<script>
+function toggleMenu(){
+    var menu = document.getElementById("menu");
+    if(menu.style.left === "0px"){
+        menu.style.left = "-250px";
+    } else {
+        menu.style.left = "0px";
+    }
+}
+</script>
+
+</body>
+</html>
